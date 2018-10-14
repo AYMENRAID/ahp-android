@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Analytic Hierarchy Process</string>
+    <string name="info_table_00">Importance</string>
+    <string name="info_table_01">Rating</string>
+    <string name="info_table_02">Reciprocal</string>
+    <string name="info_table_10">Extreme Importance</string>
+    <string name="info_table_11">9</string>
+    <string name="info_table_12">0.111</string>
+    <string name="info_table_20">Very strong to extremely</string>
+    <string name="info_table_21">8</string>
+    <string name="info_table_22">0.125</string>
+    <string name="info_table_30">Very strong Importance</string>
+    <string name="info_table_31">7</string>
+    <string name="info_table_32">0.143</string>
+    <string name="info_table_40">Strongly to very strong</string>
+    <string name="info_table_41">6</string>
+    <string name="info_table_42">0.167</string>
+    <string name="info_table_50">Strong Importance</string>
+    <string name="info_table_51">5</string>
+    <string name="info_table_52">0.200</string>
+    <string name="info_table_60">Moderately to Strong</string>
+    <string name="info_table_61">4</string>
+    <string name="info_table_62">0.250</string>
+    <string name="info_table_70">Moderate Importance</string>
+    <string name="info_table_71">3</string>
+    <string name="info_table_72">0.333</string>
+    <string name="info_table_80">Equally to Moderately</string>
+    <string name="info_table_81">2</string>
+    <string name="info_table_82">0.500</string>
+    <string name="info_table_90">Equal Importance</string>
+    <string name="info_table_91">1</string>
+    <string name="info_table_92">1.000</string>
 </resources>
