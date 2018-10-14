@@ -1,210 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".InfoActivity">
 
     <TableLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:stretchColumns="1">
+            app:layout_constraintTop_toTopOf="parent"
+            android:shrinkColumns="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp">
 
         <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingTop="20dp" android:paddingBottom="18dp">
+                android:paddingBottom="20dp">
             <TextView
                     android:text="@string/info_table_00"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView00"
-                    android:gravity="center_horizontal" android:textStyle="bold"
-                    android:layout_weight="1" android:textSize="18sp"/>
+                    android:layout_height="match_parent"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:gravity="start"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_01"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView01"
-                    android:gravity="center_horizontal" android:textStyle="bold"
-                    android:layout_weight="2" android:textSize="18sp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
             />
-            <TextView
-                    android:text="@string/info_table_02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView02"
-                    android:gravity="center_horizontal" android:textStyle="bold"
-                    android:layout_weight="2" android:textSize="18sp"
-                    android:paddingLeft="10dp" android:paddingRight="10dp"/>
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView10"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView11"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView12"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView20"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView21"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView22"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView30"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_31"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView31"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_32"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView32"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_40"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView40"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_41"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView41"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_42"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView42"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_50"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView50"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_51"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView51"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_52"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView52"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_60"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView60"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_61"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView61"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_62"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView62"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_70"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView70"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_71"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView71"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_72"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView72"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_80"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView80"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_81"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView81"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_82"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView82"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
-        <TableRow android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="10dp"
-                  android:paddingTop="10dp">
+        <TableRow
+                android:paddingTop="10dp">
             <TextView
                     android:text="@string/info_table_90"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView90"
-                    android:layout_weight="1" android:paddingLeft="10dp" android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="20sp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"/>
             <TextView
                     android:text="@string/info_table_91"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView91"
-                    android:gravity="center_horizontal" android:layout_weight="2"/>
-            <TextView
-                    android:text="@string/info_table_92"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView92"
-                    android:gravity="center_horizontal" android:layout_weight="2" android:paddingLeft="10dp"
-                    android:paddingRight="10dp"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+            />
         </TableRow>
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
