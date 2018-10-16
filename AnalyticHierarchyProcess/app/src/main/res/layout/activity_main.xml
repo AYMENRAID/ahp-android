@@ -6,14 +6,31 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <Button
-            android:text="@string/help"
-            android:layout_width="140dp"
-            android:layout_height="80dp" android:id="@+id/buttonHelp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" android:textSize="20sp"/>
+            android:layout_marginStart="8dp" android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent">
+        <Button
+                android:text="@string/start_new_analyze"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp" android:id="@+id/buttonNewAnalyze"
+                tools:layout_editor_absoluteX="116dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="8dp" android:layout_marginRight="8dp" android:textSize="24sp"
+                android:textAllCaps="false"/>
+        <Button
+                android:text="@string/help"
+                android:layout_width="match_parent"
+                android:layout_height="80dp" android:id="@+id/buttonHelp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" android:textSize="24sp"
+                android:textAllCaps="false"/>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

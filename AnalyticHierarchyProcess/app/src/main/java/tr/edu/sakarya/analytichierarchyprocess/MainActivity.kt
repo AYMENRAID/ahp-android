@@ -16,5 +16,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
+
+        val buttonNewAnalyze = findViewById<Button>(R.id.buttonNewAnalyze)
+        buttonNewAnalyze.setOnClickListener {
+            val intent = Intent(this, CriteriaActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
