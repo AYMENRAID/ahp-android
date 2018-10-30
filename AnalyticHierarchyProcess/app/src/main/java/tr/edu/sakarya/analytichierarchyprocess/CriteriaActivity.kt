@@ -31,6 +31,7 @@ class CriteriaActivity : AppCompatActivity() {
 
             val inputValue = EditText(this)
             inputValue.inputType = InputType.TYPE_CLASS_NUMBER
+            inputValue.filters = arrayOf(InputFilterMinMax(CRITERIA_VALUE_MIN, CRITERIA_VALUE_MAX))
             inputValue.hint = getString(R.string.value)
 
             linearLayout.addView(inputCriteria)
