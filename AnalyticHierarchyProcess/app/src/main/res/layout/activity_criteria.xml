@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <TextView
-                    android:text="@string/criteria"
+                    android:text="@string/criterion"
                     android:layout_width="match_parent"
                     android:gravity="center_horizontal"
                     android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                   android:layout_height="match_parent"/>
     </LinearLayout>
     <Button
-            android:text="@string/add_criteria"
+            android:text="@string/add_criterion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" android:id="@+id/buttonAddCriteria"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"

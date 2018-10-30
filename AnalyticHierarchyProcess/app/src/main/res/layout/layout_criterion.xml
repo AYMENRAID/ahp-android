@@ -5,7 +5,7 @@
               android:orientation="horizontal">
 
     <TextView
-            android:text="@string/criteria"
+            android:text="@string/criterion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textViewCriteria" android:layout_weight="1"
             android:textSize="24sp"/>

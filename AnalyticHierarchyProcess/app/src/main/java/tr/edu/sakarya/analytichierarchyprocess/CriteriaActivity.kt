@@ -10,14 +10,14 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_criteria.*
 
 class CriteriaActivity : AppCompatActivity() {
-    private lateinit var criteriaList: MutableList<Criteria>
+    private lateinit var criterionList: MutableList<Criterion>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_criteria)
 
-        criteriaList = mutableListOf()
-        val criteriaAdapter = CriteriaAdapter(this, R.layout.layout_criteria, criteriaList)
+        criterionList = mutableListOf()
+        val criteriaAdapter = CriterionAdapter(this, R.layout.layout_criterion, criterionList)
         listViewCriteria.adapter = criteriaAdapter
 
         buttonAddCriteria.setOnClickListener {
@@ -27,7 +27,7 @@ class CriteriaActivity : AppCompatActivity() {
             val inputCriteria = EditText(this)
             inputCriteria.inputType = InputType.TYPE_CLASS_TEXT
             inputCriteria.filters = arrayOf(InputFilter.LengthFilter(CRITERIA_NAME_MAX_LENGTH))
-            inputCriteria.hint = getString(R.string.criteria)
+            inputCriteria.hint = getString(R.string.criterion)
 
             val inputValue = EditText(this)
             inputValue.inputType = InputType.TYPE_CLASS_NUMBER
@@ -38,14 +38,14 @@ class CriteriaActivity : AppCompatActivity() {
             linearLayout.addView(inputValue)
 
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-            builder.setTitle(getString(R.string.add_criteria))
+            builder.setTitle(getString(R.string.add_criterion))
             builder.setView(linearLayout)
 
             builder.setPositiveButton(getString(R.string.add)) { _, _ ->
                 val criteriaInput = inputCriteria.text.toString()
                 val valueInput = inputValue.text.toString().toInt()
-                val criteria = Criteria(criteriaInput, valueInput)
-                criteriaList.add(criteria)
+                val criteria = Criterion(criteriaInput, valueInput)
+                criterionList.add(criteria)
 
                 criteriaAdapter.notifyDataSetChanged()
             }

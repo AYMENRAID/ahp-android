@@ -1,6 +1,6 @@
 package tr.edu.sakarya.analytichierarchyprocess
 
-data class Criteria(
-    val criteria: String,
+data class Criterion(
+    val criterion: String,
     val value: Int
 )

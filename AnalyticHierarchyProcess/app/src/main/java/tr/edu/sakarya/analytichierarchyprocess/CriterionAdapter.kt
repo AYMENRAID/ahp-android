@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 
-class CriteriaAdapter(context: Context, resource: Int, private val criteriaList: List<Criteria>) :
-    ArrayAdapter<Criteria>(context, resource, criteriaList) {
+class CriterionAdapter(context: Context, resource: Int, private val criterionList: List<Criterion>) :
+    ArrayAdapter<Criterion>(context, resource, criterionList) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val viewHolder: ViewHolder
         var listView: View? = convertView
 
         if (listView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            listView = inflater.inflate(R.layout.layout_criteria, parent, false)
+            listView = inflater.inflate(R.layout.layout_criterion, parent, false)
 
             viewHolder = ViewHolder(
                 listView.findViewById(R.id.textViewCriteria),
@@ -27,10 +27,10 @@ class CriteriaAdapter(context: Context, resource: Int, private val criteriaList:
             viewHolder = convertView!!.tag as ViewHolder
         }
 
-        val criteria: Criteria = criteriaList[position]
+        val criterion: Criterion = criterionList[position]
 
-        viewHolder.textViewCriteria.text = criteria.criteria
-        viewHolder.textViewValue.text = criteria.value.toString()
+        viewHolder.textViewCriteria.text = criterion.criterion
+        viewHolder.textViewValue.text = criterion.value.toString()
 
         return listView!!
     }
