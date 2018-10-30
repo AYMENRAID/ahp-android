@@ -25,4 +25,6 @@
     <string name="value">Value</string>
     <string name="add_criteria">Add Criteria</string>
     <string name="start_new_analyze">Start new analyze</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -9,22 +9,34 @@ import android.widget.TextView
 
 class CriteriaAdapter(context: Context, resource: Int, private val criteriaList: List<Criteria>) :
     ArrayAdapter<Criteria>(context, resource, criteriaList) {
-    var listView: View? = null
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val viewHolder: ViewHolder
+        var listView: View? = convertView
+
         if (listView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            listView = inflater.inflate(R.layout.layout_criteria, parent)
-        }
+            listView = inflater.inflate(R.layout.layout_criteria, parent, false)
 
-        val textViewCriteria: TextView = listView!!.findViewById(R.id.textViewCriteria)
-        val textViewValue: TextView = listView!!.findViewById(R.id.textViewValue)
+            viewHolder = ViewHolder(
+                listView.findViewById(R.id.textViewCriteria),
+                listView.findViewById(R.id.textViewValue)
+            )
+
+            listView.tag = viewHolder
+        } else {
+            viewHolder = convertView!!.tag as ViewHolder
+        }
 
         val criteria: Criteria = criteriaList[position]
 
-        textViewCriteria.text = criteria.criteria
-        textViewValue.text = criteria.value.toString()
+        viewHolder.textViewCriteria.text = criteria.criteria
+        viewHolder.textViewValue.text = criteria.value.toString()
 
         return listView!!
     }
+
+    private data class ViewHolder(
+        val textViewCriteria: TextView,
+        val textViewValue: TextView
+    )
 }

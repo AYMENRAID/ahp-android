@@ -12,7 +12,7 @@
                   android:layout_marginLeft="8dp" android:layout_marginStart="8dp"
                   app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
                   android:layout_marginRight="8dp" android:layout_marginBottom="8dp"
-                  app:layout_constraintBottom_toTopOf="@+id/button">
+                  app:layout_constraintBottom_toTopOf="@+id/buttonAddCriteria">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -32,12 +32,12 @@
         </LinearLayout>
         <ListView android:id="@+id/listViewCriteria"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
+                  android:layout_height="match_parent"/>
     </LinearLayout>
     <Button
             android:text="@string/add_criteria"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/button"
+            android:layout_height="wrap_content" android:id="@+id/buttonAddCriteria"
             android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="24dp"
             android:layout_marginStart="24dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="24dp"
