@@ -23,9 +23,8 @@ class CriterionAdapter(context: Context, resource: Int, private val criterionLis
             )
 
             listView.tag = viewHolder
-        } else {
-            viewHolder = convertView!!.tag as ViewHolder
-        }
+        } else
+            viewHolder = listView.tag as ViewHolder
 
         val criterion: Criterion = criterionList[position]
 
