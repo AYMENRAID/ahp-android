@@ -41,19 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <TextView
-                android:text="@string/criterion"
+                android:text="@string/criteria"
                 android:layout_width="match_parent"
                 android:gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textStyle="bold"
-                android:textSize="36sp"/>
-        <TextView
-                android:text="@string/value"
-                android:layout_width="match_parent"
-                android:gravity="center_horizontal"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:textStyle="bold"
                 android:textSize="36sp"/>
     </LinearLayout>
