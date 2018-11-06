@@ -9,6 +9,7 @@ import android.widget.TextView
 
 class CriterionAdapter(context: Context, resource: Int, private val criterionList: List<Criterion>) :
     ArrayAdapter<Criterion>(context, resource, criterionList) {
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val viewHolder: ViewHolder
         var listView: View? = convertView
