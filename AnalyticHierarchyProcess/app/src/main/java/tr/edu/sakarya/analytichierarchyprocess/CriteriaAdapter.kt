@@ -93,7 +93,10 @@ class CriteriaAdapter(
 
         val criterion: Criterion = getChild(groupPosition, childPosition) as Criterion
         childViewHolder.textViewCriteria.text = criterion.criterion
-        childViewHolder.editTextValue.setText(criterion.value.toString(), TextView.BufferType.EDITABLE)
+        val editTextValue = childViewHolder.editTextValue
+        editTextValue.setText(criterion.value.toString(), TextView.BufferType.EDITABLE)
+        editTextValue.filters =
+                arrayOf(InputFilterMinMax(CriteriaActivity.CRITERIA_VALUE_MIN, CriteriaActivity.CRITERIA_VALUE_MAX))
 
         return cView!!
     }
