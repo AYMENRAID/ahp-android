@@ -68,7 +68,6 @@ class CriteriaActivity : AppCompatActivity() {
             criteriaChildren[criterion] = mutableListOf()
             for (group in criteria) {
                 criteriaChildren[group]?.add(criterion)
-                criteriaChildren[criterion]?.add(group)
             }
             criteria.add(criterion)
 
