@@ -2,27 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal">
+              android:orientation="horizontal"
+              android:paddingRight="10dp"
+              android:paddingEnd="10dp"
+              android:paddingStart="60dp"
+              android:paddingLeft="60dp">
 
     <TextView
             android:text="@string/criterion"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/textViewCriteria"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:id="@+id/textViewCriteria"
             android:layout_weight="1"
-            android:paddingLeft="60sp"
-            android:paddingStart="60sp"
-            android:paddingRight="?android:attr/expandableListPreferredChildIndicatorRight"
-            android:paddingEnd="?android:attr/expandableListPreferredChildIndicatorRight"
-            android:ems="1"
             android:textSize="24sp"/>
-    <EditText
-            android:text="@string/value"
+    <Switch
+            android:text="@string/positive"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:id="@+id/editTextValue"
+            android:layout_height="match_parent"
+            android:id="@+id/switch_value_sign"
+            android:layout_weight="1.4"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextValue"
             android:gravity="center_horizontal"
             android:layout_weight="2"
-            android:ems="1"
-            android:textSize="24sp" android:inputType="number"
-            android:hint="@string/value" android:autofillHints="@string/value" tools:targetApi="o"/>
+            android:textSize="24sp"
+            android:inputType="number|numberSigned"
+            android:hint="@string/info_table_91"
+            android:autofillHints=""
+            tools:targetApi="o"/>
 
 </LinearLayout>

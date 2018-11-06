@@ -9,7 +9,7 @@
             android:layout_width="match_parent"
             android:layout_height="40sp" android:id="@+id/textViewCriteria"
             android:textSize="24sp"
-            android:paddingTop="3sp"
+            android:gravity="center_vertical"
             android:paddingStart="40sp"
             android:paddingLeft="40sp"
             android:paddingRight="40sp"

@@ -29,4 +29,6 @@
     <string name="cancel">Cancel</string>
     <string name="calculate">Calculate</string>
     <string name="criteria">Criteria</string>
+    <string name="positive">Positive</string>
+    <string name="negative">Negative</string>
 </resources>

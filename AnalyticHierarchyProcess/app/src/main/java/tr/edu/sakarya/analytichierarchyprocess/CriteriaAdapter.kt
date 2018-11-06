@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.EditText
+import android.widget.Switch
 import android.widget.TextView
 
 class CriteriaAdapter(
@@ -76,24 +77,30 @@ class CriteriaAdapter(
         parent: ViewGroup?
     ): View {
         var cView: View? = convertView
-        val childViewHolder: ChildViewHolder
+        val viewHolder: ChildViewHolder
 
         if (cView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             cView = inflater.inflate(R.layout.criterion_expandable_list_item, parent, false)
 
-            childViewHolder = ChildViewHolder(
+            val switchValueSign: Switch = cView.findViewById(R.id.switch_value_sign)
+            viewHolder = ChildViewHolder(
                 cView.findViewById(R.id.textViewCriteria),
-                cView.findViewById(R.id.editTextValue)
+                cView.findViewById(R.id.editTextValue),
+                switchValueSign
             )
 
-            cView.tag = childViewHolder
+            switchValueSign.setOnCheckedChangeListener { _, isChecked ->
+                switchValueSign.text = context.getString(if (isChecked) R.string.negative else R.string.positive)
+            }
+
+            cView.tag = viewHolder
         } else
-            childViewHolder = cView.tag as ChildViewHolder
+            viewHolder = cView.tag as ChildViewHolder
 
         val criterion: Criterion = getChild(groupPosition, childPosition) as Criterion
-        childViewHolder.textViewCriteria.text = criterion.criterion
-        val editTextValue = childViewHolder.editTextValue
+        viewHolder.textViewCriteria.text = criterion.criterion
+        val editTextValue = viewHolder.editTextValue
         editTextValue.setText(criterion.value.toString(), TextView.BufferType.EDITABLE)
         editTextValue.filters =
                 arrayOf(InputFilterMinMax(CriteriaActivity.CRITERIA_VALUE_MIN, CriteriaActivity.CRITERIA_VALUE_MAX))
@@ -111,7 +118,8 @@ class CriteriaAdapter(
 
     private data class ChildViewHolder(
         val textViewCriteria: TextView,
-        val editTextValue: EditText
+        val editTextValue: EditText,
+        val switchValueSign: Switch
     )
 
     private data class GroupViewHolder(
