@@ -12,6 +12,12 @@ import kotlinx.android.synthetic.main.activity_criteria.*
 class CriteriaActivity : AppCompatActivity() {
     private lateinit var criterionList: MutableList<Criterion>
 
+    companion object {
+        const val CRITERIA_NAME_MAX_LENGTH = 20
+        const val CRITERIA_VALUE_MIN = 1
+        const val CRITERIA_VALUE_MAX = 9
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_criteria)
