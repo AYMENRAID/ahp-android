@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_criteria.*
 class CriteriaActivity : AppCompatActivity() {
     private lateinit var criteria: MutableList<Criterion>
     private lateinit var criteriaChildren: MutableMap<Criterion, MutableList<Criterion>>
+    private var expandedGroup = -1
 
     companion object {
         const val CRITERIA_NAME_MAX_LENGTH = 20
@@ -55,6 +56,12 @@ class CriteriaActivity : AppCompatActivity() {
 
             val alertDialog: AlertDialog = builder.create()
             alertDialog.show()
+        }
+
+        listViewCriteria.setOnGroupExpandListener { groupPosition ->
+            if (expandedGroup == groupPosition) return@setOnGroupExpandListener
+            listViewCriteria.collapseGroup(expandedGroup)
+            expandedGroup = groupPosition
         }
     }
 }
