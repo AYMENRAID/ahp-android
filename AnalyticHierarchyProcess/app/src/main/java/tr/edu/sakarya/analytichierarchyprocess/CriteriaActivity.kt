@@ -23,8 +23,8 @@ class CriteriaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_criteria)
 
         criterionList = mutableListOf()
-        val criteriaAdapter = CriterionAdapter(this, R.layout.layout_criterion, criterionList)
-        listViewCriteria.adapter = criteriaAdapter
+        val criteriaAdapter = CriterionAdapter(this, R.layout.criterion_expandable_list_group, criterionList)
+        expandableListViewCriteria.adapter = criteriaAdapter
 
         buttonAddCriteria.setOnClickListener {
             val linearLayout = LinearLayout(this)

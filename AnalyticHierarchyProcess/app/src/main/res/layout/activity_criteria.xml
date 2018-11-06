@@ -63,8 +63,8 @@
             android:background="@android:color/darker_gray"
             android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
             android:layout_marginEnd="10dp"/>
-    <ListView android:id="@+id/listViewCriteria"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    </ListView>
+    <ExpandableListView android:id="@+id/expandableListViewCriteria"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+    </ExpandableListView>
 </LinearLayout>

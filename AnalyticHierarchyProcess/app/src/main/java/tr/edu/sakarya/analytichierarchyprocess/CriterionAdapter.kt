@@ -16,7 +16,7 @@ class CriterionAdapter(context: Context, resource: Int, private val criterionLis
 
         if (listView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            listView = inflater.inflate(R.layout.layout_criterion, parent, false)
+            listView = inflater.inflate(R.layout.criterion_expandable_list_group, parent, false)
 
             viewHolder = ViewHolder(
                 listView.findViewById(R.id.textViewCriteria),
