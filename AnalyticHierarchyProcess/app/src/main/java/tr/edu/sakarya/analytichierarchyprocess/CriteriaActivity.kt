@@ -6,25 +6,27 @@ import android.support.v7.app.AppCompatActivity
 import android.text.InputFilter
 import android.text.InputType
 import android.widget.EditText
+import android.widget.ExpandableListView
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.activity_criteria.*
 
 class CriteriaActivity : AppCompatActivity() {
-    private lateinit var criterionList: MutableList<Criterion>
+    private lateinit var criteria: MutableList<Criterion>
+    private lateinit var criteriaChildren: MutableMap<Criterion, MutableList<Criterion>>
 
     companion object {
         const val CRITERIA_NAME_MAX_LENGTH = 20
-        const val CRITERIA_VALUE_MIN = 1
-        const val CRITERIA_VALUE_MAX = 9
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_criteria)
 
-        criterionList = mutableListOf()
-        val criteriaAdapter = CriterionAdapter(this, R.layout.criterion_expandable_list_group, criterionList)
-        expandableListViewCriteria.adapter = criteriaAdapter
+        criteria = mutableListOf()
+        criteriaChildren = mutableMapOf()
+        val criteriaAdapter = CriteriaAdapter(this, criteria, criteriaChildren)
+        val listViewCriteria: ExpandableListView = findViewById(R.id.expandable_list_view_criteria)
+        listViewCriteria.setAdapter(criteriaAdapter)
 
         buttonAddCriteria.setOnClickListener {
             val linearLayout = LinearLayout(this)
@@ -35,13 +37,7 @@ class CriteriaActivity : AppCompatActivity() {
             inputCriteria.filters = arrayOf(InputFilter.LengthFilter(CRITERIA_NAME_MAX_LENGTH))
             inputCriteria.hint = getString(R.string.criterion)
 
-            val inputValue = EditText(this)
-            inputValue.inputType = InputType.TYPE_CLASS_NUMBER
-            inputValue.filters = arrayOf(InputFilterMinMax(CRITERIA_VALUE_MIN, CRITERIA_VALUE_MAX))
-            inputValue.hint = getString(R.string.value)
-
             linearLayout.addView(inputCriteria)
-            linearLayout.addView(inputValue)
 
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             builder.setTitle(getString(R.string.add_criterion))
@@ -49,9 +45,9 @@ class CriteriaActivity : AppCompatActivity() {
 
             builder.setPositiveButton(getString(R.string.add)) { _, _ ->
                 val criteriaInput = inputCriteria.text.toString()
-                val valueInput = inputValue.text.toString().toInt()
-                val criteria = Criterion(criteriaInput, valueInput)
-                criterionList.add(criteria)
+                val criterion = Criterion(criteriaInput)
+                criteria.add(criterion)
+                criteriaChildren[criterion] = mutableListOf()
 
                 criteriaAdapter.notifyDataSetChanged()
             }
