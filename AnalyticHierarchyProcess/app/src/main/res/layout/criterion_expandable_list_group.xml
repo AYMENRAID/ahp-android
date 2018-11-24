@@ -7,7 +7,7 @@
     <TextView
             android:text="@string/criterion"
             android:layout_width="match_parent"
-            android:layout_height="40sp" android:id="@+id/textViewCriteria"
+            android:layout_height="40sp" android:id="@+id/text_view_criteria"
             android:textSize="24sp"
             android:gravity="center_vertical"
             android:paddingStart="40sp"
