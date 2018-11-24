@@ -1,6 +1,8 @@
 package tr.edu.sakarya.analytichierarchyprocess
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,22 +85,35 @@ class CriteriaAdapter(
                     CriteriaActivity.CRITERIA_VALUE_MAX
                 )
             )
+            editTextValue.tag = EditTextValueTag(
+                EditTextValueTextWatcher(editTextValue),
+                Position(groupPosition, childPosition)
+            )
 
             cView.tag = viewHolder
         } else
             viewHolder = cView.tag as ChildViewHolder
 
         val criterion: Criterion = getChild(groupPosition, childPosition) as Criterion
+        val position = Position(groupPosition, childPosition)
 
         viewHolder.textViewCriteria.text = criterion.criterion
-        viewHolder.editTextValue.setText(criterion.value.absoluteValue.toString())
+
+        val editTextValue: EditText = viewHolder.editTextValue
+        val editTextValueTag = editTextValue.tag as EditTextValueTag
+        val textWatcher = editTextValueTag.textWatcher
+        editTextValue.removeTextChangedListener(textWatcher)
+        editTextValue.setText(criterion.value.absoluteValue.toString())
+        editTextValue.addTextChangedListener(textWatcher)
+        editTextValueTag.position = position
+
         val switchValueSign = viewHolder.switchValueSign
         val negative = criterion.value < 0
         switchValueSign.setOnCheckedChangeListener(null)
         switchValueSign.isChecked = negative
         switchValueSign.jumpDrawablesToCurrentState()
         switchValueSign.text = context.getString(if (negative) R.string.negative else R.string.positive)
-        switchValueSign.tag = Position(groupPosition, childPosition)
+        switchValueSign.tag = position
         switchValueSign.setOnCheckedChangeListener(switchValueSignOnChangeListener)
 
         return cView!!
@@ -126,6 +141,20 @@ class CriteriaAdapter(
         }
     }
 
+    private inner class EditTextValueTextWatcher(private val view: View) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            val tag = view.tag as EditTextValueTag? ?: return
+            val position = tag.position
+            val criterion = getChild(position.groupPosition, position.childPosition) as Criterion
+
+            criterion.value = s.toString().toIntOrNull() ?: return
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
     private data class ChildViewHolder(
         val textViewCriteria: TextView,
         val editTextValue: EditText,
@@ -139,5 +168,10 @@ class CriteriaAdapter(
     private data class Position(
         val groupPosition: Int,
         val childPosition: Int
+    )
+
+    private data class EditTextValueTag(
+        val textWatcher: EditTextValueTextWatcher,
+        var position: Position
     )
 }
