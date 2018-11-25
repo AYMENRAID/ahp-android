@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.InputFilter
 import android.text.InputType
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ExpandableListView
@@ -31,12 +32,12 @@ class CriteriaActivity : AppCompatActivity() {
         listViewCriteria = findViewById(R.id.expandable_list_view_criteria)
         listViewCriteria.setAdapter(criteriaAdapter)
 
-        buttonAddCriteria.setOnClickListener {
-            onClickAddNewCriteria()
-        }
+        buttonAddCriteria.setOnClickListener(onClickAddNewCriteria)
+
+        buttonCalculate.setOnClickListener(onClickButtonCalculate)
     }
 
-    private fun onClickAddNewCriteria() {
+    private val onClickAddNewCriteria = View.OnClickListener {
         val inputCriteria = EditText(this)
         inputCriteria.inputType = InputType.TYPE_CLASS_TEXT
         inputCriteria.filters = arrayOf(InputFilter.LengthFilter(CRITERIA_NAME_MAX_LENGTH))
@@ -67,5 +68,23 @@ class CriteriaActivity : AppCompatActivity() {
         }
 
         alertDialog.show()
+    }
+
+    private val onClickButtonCalculate = View.OnClickListener {
+        val size = criteriaList.size
+        val factorWeights = Array(size) { FloatArray(size) }
+
+        for (i in 0 until size) {
+            val children = criteriaList[i].children
+
+            for (j in 0 until children.size) {
+                val value = children[j].value.toFloat()
+                val index = j + i + 1
+
+                factorWeights[i][index] = if (value > 0) value else 1 / -value
+                factorWeights[index][i] = 1 / factorWeights[i][index]
+            }
+            factorWeights[i][i] = 1f
+        }
     }
 }
