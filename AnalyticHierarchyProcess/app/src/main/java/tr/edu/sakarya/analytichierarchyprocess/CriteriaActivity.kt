@@ -73,6 +73,7 @@ class CriteriaActivity : AppCompatActivity() {
     private val onClickButtonCalculate = View.OnClickListener {
         val size = criteriaList.size
         val factorWeights = Array(size) { FloatArray(size) }
+        val subtotals = FloatArray(size)
 
         for (i in 0 until size) {
             val children = criteriaList[i].children
@@ -83,8 +84,12 @@ class CriteriaActivity : AppCompatActivity() {
 
                 factorWeights[i][index] = if (value > 0) value else 1 / -value
                 factorWeights[index][i] = 1 / factorWeights[i][index]
+
+                subtotals[index] += factorWeights[i][index]
+                subtotals[i] += factorWeights[index][i]
             }
             factorWeights[i][i] = 1f
+            subtotals[i] += factorWeights[i][i]
         }
     }
 }
