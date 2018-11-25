@@ -91,5 +91,25 @@ class CriteriaActivity : AppCompatActivity() {
             factorWeights[i][i] = 1f
             subtotals[i] += factorWeights[i][i]
         }
+
+
+        val normalizedWeights = Array(size) { FloatArray(size) }
+
+        for (i in 0 until size) {
+            for (j in 0 until size) {
+                normalizedWeights[i][j] = factorWeights[i][j] / subtotals[j]
+            }
+        }
+
+
+        val priorities = FloatArray(size)
+
+        for (i in 0 until size) {
+            var sum = 0f
+            for (j in 0 until size) {
+                sum += normalizedWeights[i][j]
+            }
+            priorities[i] = sum / size
+        }
     }
 }
