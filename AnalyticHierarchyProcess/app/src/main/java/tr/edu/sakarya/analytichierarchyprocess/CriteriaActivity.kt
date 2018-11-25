@@ -72,44 +72,44 @@ class CriteriaActivity : AppCompatActivity() {
 
     private val onClickButtonCalculate = View.OnClickListener {
         val size = criteriaList.size
-        val factorWeights = Array(size) { FloatArray(size) }
+        val weights = Array(size) { FloatArray(size) }
         val subtotals = FloatArray(size)
 
+        // Calculate the weights
         for (i in 0 until size) {
             val children = criteriaList[i].children
 
             for (j in 0 until children.size) {
                 val value = children[j].value.toFloat()
-                val index = j + i + 1
+                val index = j + i + 1 // Plus i to make the calculations triangular, plus 1 to skip diagonal
 
-                factorWeights[i][index] = if (value > 0) value else 1 / -value
-                factorWeights[index][i] = 1 / factorWeights[i][index]
+                weights[i][index] = if (value > 0) value else 1 / -value // Take absolute reciprocal if negative
+                weights[index][i] = 1 / weights[i][index] // Reciprocal
 
-                subtotals[index] += factorWeights[i][index]
-                subtotals[i] += factorWeights[index][i]
+                // Add the values to subtotals by their column indexes
+                subtotals[index] += weights[i][index]
+                subtotals[i] += weights[index][i]
             }
-            factorWeights[i][i] = 1f
-            subtotals[i] += factorWeights[i][i]
+            // The diagonal indicates the criterion itself, so its weight is 1
+            weights[i][i] = 1f
+            subtotals[i] += weights[i][i]
         }
 
-
-        val normalizedWeights = Array(size) { FloatArray(size) }
-
+        // Normalize the weights
         for (i in 0 until size) {
             for (j in 0 until size) {
-                normalizedWeights[i][j] = factorWeights[i][j] / subtotals[j]
+                weights[i][j] /= subtotals[j]
             }
         }
 
-
+        // Calculate priorities with the normalized weights
         val priorities = FloatArray(size)
-
         for (i in 0 until size) {
             var sum = 0f
             for (j in 0 until size) {
-                sum += normalizedWeights[i][j]
+                sum += weights[i][j]
             }
-            priorities[i] = sum / size
+            priorities[i] = sum / size // Average of the row
         }
     }
 }
