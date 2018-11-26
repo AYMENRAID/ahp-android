@@ -40,4 +40,6 @@
     <string name="not_consistent">Tutarlı değil</string>
     <string name="warning_empty_criterion">Lütfen bir kriter girin</string>
     <string name="warning_criterion_exists">Bu kriter zaten mevcut</string>
+    <string name="warning_no_criterion">Öncelikle kriter girmelisiniz</string>
+    <string name="warning_need_two_criteria">En az iki kriter olmalıdır</string>
 </resources>

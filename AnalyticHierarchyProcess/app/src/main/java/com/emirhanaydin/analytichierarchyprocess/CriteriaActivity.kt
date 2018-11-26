@@ -84,6 +84,15 @@ class CriteriaActivity : AppCompatActivity() {
 
     private val onClickButtonCalculate = View.OnClickListener {
         val size = criteriaList.size
+        if (size < 1) {
+            Toast.makeText(this, getString(R.string.warning_no_criterion), Toast.LENGTH_SHORT).show()
+            return@OnClickListener
+        }
+        if (size < 2) {
+            Toast.makeText(this, getString(R.string.warning_need_two_criteria), Toast.LENGTH_LONG).show()
+            return@OnClickListener
+        }
+
         val weights = Array(size) { FloatArray(size) }
         val subtotals = FloatArray(size)
 

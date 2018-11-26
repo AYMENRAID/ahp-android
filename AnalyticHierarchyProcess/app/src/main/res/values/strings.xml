@@ -39,4 +39,6 @@
     <string name="not_consistent">Not consistent</string>
     <string name="warning_empty_criterion">Please enter a criterion</string>
     <string name="warning_criterion_exists">This criterion already exists</string>
+    <string name="warning_no_criterion">You must enter criteria first</string>
+    <string name="warning_need_two_criteria">There must be at least two criteria</string>
 </resources>
