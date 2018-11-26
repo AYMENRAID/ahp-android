@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_result.*
+import java.text.NumberFormat
 
 class ResultActivity : AppCompatActivity() {
     companion object {
@@ -18,7 +20,12 @@ class ResultActivity : AppCompatActivity() {
 
         val criteria = intent.getStringArrayExtra(CRITERIA)
         val priorities = intent.getFloatArrayExtra(PRIORITIES)
-        // TODO val consistencyRatio = intent.getFloatExtra(CONSISTENCY_RATIO, 0f)
+        val consistencyRatio = intent.getFloatExtra(CONSISTENCY_RATIO, 0f)
+
+        val priorityFormat = NumberFormat.getPercentInstance().apply {
+            minimumFractionDigits = 2
+        }
+        textViewConsistencyRatio.text = priorityFormat.format(consistencyRatio)
 
         val criteriaPrioritiesList: MutableList<CriterionPriority> = mutableListOf()
         for (i in 0 until criteria.size) {
