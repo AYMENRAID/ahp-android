@@ -1,6 +1,7 @@
 package tr.edu.sakarya.analytichierarchyprocess
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -111,5 +112,18 @@ class CriteriaActivity : AppCompatActivity() {
             }
             priorities[i] = sum / size // Average of the row
         }
+
+        // Calculate the consistency ratio
+        val eMax = multiplyVectors(priorities, subtotals)
+        val ci = (eMax - size) / (size - 1)
+        val cr = ci / getRandomIndex(size)
+
+        // Start ResultActivity with the calculated results
+        val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra(ResultActivity.CRITERIA, criteriaList.map { criteria -> criteria.parent }.toTypedArray())
+        intent.putExtra(ResultActivity.PRIORITIES, priorities)
+        intent.putExtra(ResultActivity.CONSISTENCY_RATIO, cr)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
     }
 }
