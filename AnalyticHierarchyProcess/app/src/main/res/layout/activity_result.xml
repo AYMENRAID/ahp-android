@@ -24,7 +24,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20sp"
+            android:layout_marginBottom="10sp"
             android:orientation="horizontal">
         <TextView
                 android:text="@string/consistency_ratio"
@@ -45,6 +45,18 @@
                 android:layout_marginRight="20sp"
                 android:layout_marginEnd="20sp"/>
     </LinearLayout>
+
+    <TextView
+            android:text="@string/consistent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewConsistency"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal|end"
+            android:layout_marginBottom="20sp"
+            android:layout_marginRight="20sp"
+            android:layout_marginEnd="20sp"/>
 
     <View
             android:layout_width="match_parent"

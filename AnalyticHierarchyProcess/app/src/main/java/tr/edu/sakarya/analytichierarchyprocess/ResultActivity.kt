@@ -1,5 +1,6 @@
 package tr.edu.sakarya.analytichierarchyprocess
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -26,6 +27,14 @@ class ResultActivity : AppCompatActivity() {
             minimumFractionDigits = 2
         }
         textViewConsistencyRatio.text = priorityFormat.format(consistencyRatio)
+
+        if (consistencyRatio < 0.1f) {
+            textViewConsistency.text = getString(R.string.consistent)
+            textViewConsistency.setTextColor(Color.GREEN)
+        } else {
+            textViewConsistency.text = getString(R.string.not_consistent)
+            textViewConsistency.setTextColor(Color.RED)
+        }
 
         val criteriaPrioritiesList: MutableList<CriterionPriority> = mutableListOf()
         for (i in 0 until criteria.size) {
