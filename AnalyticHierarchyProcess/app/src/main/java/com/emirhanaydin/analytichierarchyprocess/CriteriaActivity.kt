@@ -64,8 +64,10 @@ class CriteriaActivity : AppCompatActivity() {
         val alertDialog: AlertDialog = builder.create()
 
         alertDialog.setOnShowListener {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+            inputCriteria.postDelayed({
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+            }, 100)
         }
 
         alertDialog.show()
