@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Analytic Hierarchy Process</string>
+    <string name="help">Yardım</string>
+    <string name="info_table_00">Önem</string>
+    <string name="info_table_01">Derece</string>
+    <string name="info_table_10">Aşırı</string>
+    <string name="info_table_11">9</string>
+    <string name="info_table_20">Çok güçlü ile aşırı arası</string>
+    <string name="info_table_21">8</string>
+    <string name="info_table_30">Çok güçlü</string>
+    <string name="info_table_40">Güçlü ile çok güçlü arası</string>
+    <string name="info_table_41">6</string>
+    <string name="info_table_31">7</string>
+    <string name="info_table_50">Güçlü</string>
+    <string name="info_table_51">5</string>
+    <string name="info_table_60">Orta ile güçlü arası</string>
+    <string name="info_table_61">4</string>
+    <string name="info_table_70">Orta</string>
+    <string name="info_table_71">3</string>
+    <string name="info_table_80">Eşit ile orta arası</string>
+    <string name="info_table_81">2</string>
+    <string name="info_table_90">Eşit</string>
+    <string name="info_table_91">1</string>
+    <string name="criterion">Kriter</string>
+    <string name="value">Değer</string>
+    <string name="priority">Öncelik</string>
+    <string name="add_criterion">Kriter Ekle</string>
+    <string name="new_analyze">Yeni analiz</string>
+    <string name="add">Ekle</string>
+    <string name="cancel">İptal</string>
+    <string name="calculate">Hesapla</string>
+    <string name="criteria">Kriterler</string>
+    <string name="positive">Pozitif</string>
+    <string name="negative">Negatif</string>
+    <string name="consistency_ratio">Tutarlılık Oranı</string>
+    <string name="zero_percentage">%0,00</string>
+    <string name="results">Sonuçlar</string>
+    <string name="consistent">Tutarlı</string>
+    <string name="not_consistent">Tutarlı değil</string>
+    <string name="warning_empty_criterion">Lütfen bir kriter girin</string>
+    <string name="warning_criterion_exists">Bu kriter zaten mevcut</string>
+</resources>
