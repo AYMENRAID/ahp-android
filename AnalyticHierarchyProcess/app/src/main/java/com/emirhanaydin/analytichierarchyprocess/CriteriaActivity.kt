@@ -143,7 +143,6 @@ class CriteriaActivity : AppCompatActivity() {
         intent.putExtra(ResultActivity.CRITERIA, criteriaList.map { criteria -> criteria.parent }.toTypedArray())
         intent.putExtra(ResultActivity.PRIORITIES, priorities)
         intent.putExtra(ResultActivity.CONSISTENCY_RATIO, cr)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
     }
 }
