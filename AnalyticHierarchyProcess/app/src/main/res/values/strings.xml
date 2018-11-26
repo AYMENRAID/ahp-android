@@ -37,4 +37,6 @@
     <string name="results">Results</string>
     <string name="consistent">Consistent</string>
     <string name="not_consistent">Not consistent</string>
+    <string name="warning_empty_criterion">Please enter a criterion</string>
+    <string name="warning_criterion_exists">This criterion already exists</string>
 </resources>

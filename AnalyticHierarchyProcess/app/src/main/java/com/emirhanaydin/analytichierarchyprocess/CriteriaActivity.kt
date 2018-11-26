@@ -11,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ExpandableListView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_criteria.*
 
 class CriteriaActivity : AppCompatActivity() {
@@ -49,7 +50,15 @@ class CriteriaActivity : AppCompatActivity() {
         builder.setView(inputCriteria)
 
         builder.setPositiveButton(getString(R.string.add)) { _, _ ->
-            val input = inputCriteria.text.toString()
+            val input = inputCriteria.text.toString().trim()
+            if (input.isEmpty()) {
+                Toast.makeText(this, getString(R.string.warning_empty_criterion), Toast.LENGTH_SHORT).show()
+                return@setPositiveButton
+            }
+            if (criteriaList.any { criteria -> criteria.parent.equals(input, true) }) {
+                Toast.makeText(this, getString(R.string.warning_criterion_exists), Toast.LENGTH_LONG).show()
+                return@setPositiveButton
+            }
 
             val criterion = Criterion(input)
             for (criteria in criteriaList) {
