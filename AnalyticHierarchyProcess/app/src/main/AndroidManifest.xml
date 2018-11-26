@@ -18,7 +18,9 @@
         </activity>
         <activity android:name="com.emirhanaydin.analytichierarchyprocess.InfoActivity">
         </activity>
-        <activity android:name="com.emirhanaydin.analytichierarchyprocess.CriteriaActivity">
+        <activity
+                android:name="com.emirhanaydin.analytichierarchyprocess.CriteriaActivity"
+                android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity android:name="com.emirhanaydin.analytichierarchyprocess.ResultActivity">
         </activity>
