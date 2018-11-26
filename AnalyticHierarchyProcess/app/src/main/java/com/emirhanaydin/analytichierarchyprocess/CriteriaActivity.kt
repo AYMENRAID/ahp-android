@@ -20,9 +20,9 @@ class CriteriaActivity : AppCompatActivity() {
     private lateinit var listViewCriteria: ExpandableListView
 
     companion object {
-        const val CRITERIA_NAME_MAX_LENGTH = 20
-        const val CRITERIA_VALUE_MIN = 1
-        const val CRITERIA_VALUE_MAX = 9
+        const val CRITERION_NAME_MAX_LENGTH = 20
+        const val CRITERION_VALUE_MIN = 1
+        const val CRITERION_VALUE_MAX = 9
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,15 +34,15 @@ class CriteriaActivity : AppCompatActivity() {
         listViewCriteria = findViewById(R.id.expandable_list_view_criteria)
         listViewCriteria.setAdapter(criteriaAdapter)
 
-        buttonAddCriteria.setOnClickListener(onClickAddNewCriteria)
+        buttonAddCriterion.setOnClickListener(onClickAddCriterion)
 
         buttonCalculate.setOnClickListener(onClickButtonCalculate)
     }
 
-    private val onClickAddNewCriteria = View.OnClickListener {
+    private val onClickAddCriterion = View.OnClickListener {
         val inputCriteria = EditText(this)
         inputCriteria.inputType = InputType.TYPE_CLASS_TEXT
-        inputCriteria.filters = arrayOf(InputFilter.LengthFilter(CRITERIA_NAME_MAX_LENGTH))
+        inputCriteria.filters = arrayOf(InputFilter.LengthFilter(CRITERION_NAME_MAX_LENGTH))
         inputCriteria.hint = getString(R.string.criterion)
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)

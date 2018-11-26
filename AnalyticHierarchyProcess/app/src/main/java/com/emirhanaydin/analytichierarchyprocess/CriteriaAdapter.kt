@@ -81,8 +81,8 @@ class CriteriaAdapter(
             )
             editTextValue.filters = arrayOf(
                 InputFilterMinMax(
-                    CriteriaActivity.CRITERIA_VALUE_MIN,
-                    CriteriaActivity.CRITERIA_VALUE_MAX
+                    CriteriaActivity.CRITERION_VALUE_MIN,
+                    CriteriaActivity.CRITERION_VALUE_MAX
                 )
             )
             editTextValue.tag = EditTextValueTag(
