@@ -1,4 +1,4 @@
-package tr.edu.sakarya.analytichierarchyprocess
+package com.emirhanaydin.analytichierarchyprocess
 
 import android.graphics.Color
 import android.os.Bundle

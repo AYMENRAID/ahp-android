@@ -1,4 +1,4 @@
-package tr.edu.sakarya.analytichierarchyprocess
+package com.emirhanaydin.analytichierarchyprocess
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

@@ -1,4 +1,4 @@
-package tr.edu.sakarya.analytichierarchyprocess
+package com.emirhanaydin.analytichierarchyprocess
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

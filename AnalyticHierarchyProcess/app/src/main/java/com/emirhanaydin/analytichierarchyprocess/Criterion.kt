@@ -1,4 +1,4 @@
-package tr.edu.sakarya.analytichierarchyprocess
+package com.emirhanaydin.analytichierarchyprocess
 
 data class Criterion(
     val criterion: String,
