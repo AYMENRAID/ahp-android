@@ -1,9 +1,11 @@
 package com.emirhanaydin.analytichierarchyprocess
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.text.InputFilter
 import android.text.InputType
 import android.view.View
@@ -26,7 +28,11 @@ class CriteriaActivity : AppCompatActivity() {
 
         criterionList = mutableListOf()
         criteriaAdapter = CriteriaAdapter(criterionList)
-        recyclerViewCriteria.adapter = criteriaAdapter
+        recyclerViewCriteria.apply {
+            setHasFixedSize(false)
+            layoutManager = LinearLayoutManager(this@CriteriaActivity)
+            adapter = criteriaAdapter
+        }
 
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
         buttonCriteriaNext.setOnClickListener(onClickNext)
@@ -71,5 +77,8 @@ class CriteriaActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private val onClickNext = View.OnClickListener {}
+    private val onClickNext = View.OnClickListener {
+        val intent = Intent(this, AlternativesActivity::class.java)
+        startActivity(intent)
+    }
 }
