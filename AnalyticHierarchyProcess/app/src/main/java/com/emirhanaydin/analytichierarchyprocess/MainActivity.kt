@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         val buttonNewAnalyze = findViewById<Button>(R.id.buttonNewAnalyze)
         buttonNewAnalyze.setOnClickListener {
-            val intent = Intent(this, AlternativesActivity::class.java)
+            val intent = Intent(this, CriteriaActivity::class.java)
             startActivity(intent)
         }
     }
