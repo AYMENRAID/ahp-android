@@ -48,4 +48,5 @@
     <string name="warning_alternative_exists">Bu alternatif zaten mevcut</string>
     <string name="warning_no_alternative">Öncelikle alternatif girmelisiniz</string>
     <string name="warning_need_two_alternatives">En az iki alternatif olmalıdır</string>
+    <string name="next">Sonraki</string>
 </resources>

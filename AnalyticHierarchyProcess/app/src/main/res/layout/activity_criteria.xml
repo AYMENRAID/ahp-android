@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView android:text="@string/criteria"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:textSize="42sp"
+              android:textStyle="bold"
+              android:gravity="center_horizontal"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@android:color/darker_gray"/>
+    <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewCriteria"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@android:color/darker_gray"/>
+        <Space android:layout_width="match_parent" android:layout_height="10dp"/>
+        <Button
+                android:text="@string/add_criterion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonAddCriterion"
+                android:textSize="24sp"
+                android:textAllCaps="false"
+                android:minHeight="70dp"
+                android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"/>
+        <Button
+                android:text="@string/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonCriteriaNext"
+                android:textSize="24sp"
+                android:textAllCaps="false"
+                android:minHeight="70dp"
+                android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"/>
+        <Space android:layout_width="match_parent" android:layout_height="10dp"/>
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@android:color/darker_gray"/>
+    </LinearLayout>
+</LinearLayout>

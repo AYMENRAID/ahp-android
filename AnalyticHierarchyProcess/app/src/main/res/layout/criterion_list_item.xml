@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/linearLayoutCriterionListItem"
+              android:layout_width="match_parent" android:layout_height="match_parent"
+              android:orientation="horizontal"
+              android:background="@drawable/selector_row">
+
+    <TextView
+            android:text="@string/criterion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewCriterionName"
+            android:gravity="center_vertical"
+            android:textSize="24sp"
+            android:paddingTop="5sp"
+            android:paddingBottom="5sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginStart="20sp"
+            android:layout_weight="1"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextCriterionRating"
+            android:inputType="number"
+            android:textSize="24sp"
+            android:gravity="center_vertical|center_horizontal|end"
+            android:layout_marginRight="20sp"
+            android:layout_marginEnd="20sp"
+            android:layout_weight="2"
+            android:hint="@string/info_table_91"
+            android:autofillHints=""
+            tools:targetApi="o"/>
+</LinearLayout>
