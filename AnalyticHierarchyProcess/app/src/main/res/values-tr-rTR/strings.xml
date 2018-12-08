@@ -42,4 +42,10 @@
     <string name="warning_criterion_exists">Bu kriter zaten mevcut</string>
     <string name="warning_no_criterion">Öncelikle kriter girmelisiniz</string>
     <string name="warning_need_two_criteria">En az iki kriter olmalıdır</string>
+    <string name="alternative">Alternatif</string>
+    <string name="alternatives">Alternatifler</string>
+    <string name="add_alternative">Alternatif Ekle</string>
+    <string name="warning_alternative_exists">Bu alternatif zaten mevcut</string>
+    <string name="warning_no_alternative">Öncelikle alternatif girmelisiniz</string>
+    <string name="warning_need_two_alternatives">En az iki alternatif olmalıdır</string>
 </resources>

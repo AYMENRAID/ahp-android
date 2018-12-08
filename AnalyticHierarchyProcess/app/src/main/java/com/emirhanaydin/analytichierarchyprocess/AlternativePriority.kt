@@ -1,6 +1,6 @@
 package com.emirhanaydin.analytichierarchyprocess
 
-data class CriterionPriority(
-    val criterion: String,
+data class AlternativePriority(
+    val alternative: String,
     val priority: Float
 )

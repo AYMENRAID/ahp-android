@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import java.text.NumberFormat
 
-class ResultAdapter(private val dataSet: List<CriterionPriority>) :
+class ResultAdapter(private val dataSet: List<AlternativePriority>) :
     RecyclerView.Adapter<ResultAdapter.ViewHolder>() {
     private val priorityFormat = NumberFormat.getPercentInstance().apply {
         minimumFractionDigits = 2
@@ -25,14 +25,14 @@ class ResultAdapter(private val dataSet: List<CriterionPriority>) :
     }
 
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
-        val criterionPriority = dataSet[p1]
+        val alternativePriority = dataSet[p1]
 
-        p0.textViewCriterion.text = criterionPriority.criterion
-        p0.textViewPriority.text = priorityFormat.format(criterionPriority.priority)
+        p0.textViewAlternative.text = alternativePriority.alternative
+        p0.textViewPriority.text = priorityFormat.format(alternativePriority.priority)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textViewCriterion: TextView = view.findViewById(R.id.text_view_result_criterion)
+        val textViewAlternative: TextView = view.findViewById(R.id.textViewResultAlternative)
         val textViewPriority: TextView = view.findViewById(R.id.text_view_result_priority)
     }
 }

@@ -9,13 +9,13 @@ import android.view.ViewGroup
 import android.widget.*
 import kotlin.math.absoluteValue
 
-class CriteriaAdapter(
+class AlternativesAdapter(
     private val context: Context,
-    private val criteriaList: List<Criteria>
+    private val alternativesList: List<Alternatives>
 ) :
     BaseExpandableListAdapter() {
     override fun getGroup(groupPosition: Int): Any {
-        return criteriaList[groupPosition]
+        return alternativesList[groupPosition]
     }
 
     override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
@@ -32,25 +32,25 @@ class CriteriaAdapter(
 
         if (cView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            cView = inflater.inflate(R.layout.criterion_expandable_list_group, parent, false)
+            cView = inflater.inflate(R.layout.alternatives_expandable_list_group, parent, false)
 
-            groupViewHolder = GroupViewHolder(cView.findViewById(R.id.text_view_criteria))
+            groupViewHolder = GroupViewHolder(cView.findViewById(R.id.textViewAlternative))
 
             cView.tag = groupViewHolder
         } else
             groupViewHolder = cView.tag as GroupViewHolder
 
-        groupViewHolder.textViewCriteria.text = (getGroup(groupPosition) as Criteria).parent
+        groupViewHolder.textViewAlternative.text = (getGroup(groupPosition) as Alternatives).parent
 
         return cView!!
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
-        return criteriaList[groupPosition].children.size
+        return alternativesList[groupPosition].children.size
     }
 
     override fun getChild(groupPosition: Int, childPosition: Int): Any {
-        return criteriaList[groupPosition].children[childPosition]
+        return alternativesList[groupPosition].children[childPosition]
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -69,20 +69,20 @@ class CriteriaAdapter(
 
         if (cView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            cView = inflater.inflate(R.layout.criterion_expandable_list_item, parent, false)
+            cView = inflater.inflate(R.layout.alternative_expandable_list_item, parent, false)
 
-            val textViewCriteria: TextView = cView.findViewById(R.id.text_view_criteria)
+            val textViewAlternative: TextView = cView.findViewById(R.id.textViewAlternative)
             val editTextValue: EditText = cView.findViewById(R.id.edit_text_value)
             val switchValueSign: Switch = cView.findViewById(R.id.switch_value_sign)
             viewHolder = ChildViewHolder(
-                textViewCriteria,
+                textViewAlternative,
                 editTextValue,
                 switchValueSign
             )
             editTextValue.filters = arrayOf(
                 InputFilterMinMax(
-                    CriteriaActivity.CRITERION_VALUE_MIN,
-                    CriteriaActivity.CRITERION_VALUE_MAX
+                    AlternativesActivity.ALTERNATIVE_VALUE_MIN,
+                    AlternativesActivity.ALTERNATIVE_VALUE_MAX
                 )
             )
             editTextValue.tag = EditTextValueTag(
@@ -94,21 +94,21 @@ class CriteriaAdapter(
         } else
             viewHolder = cView.tag as ChildViewHolder
 
-        val criterion: Criterion = getChild(groupPosition, childPosition) as Criterion
+        val alternative: Alternative = getChild(groupPosition, childPosition) as Alternative
         val position = Position(groupPosition, childPosition)
 
-        viewHolder.textViewCriteria.text = criterion.criterion
+        viewHolder.textViewAlternative.text = alternative.name
 
         val editTextValue: EditText = viewHolder.editTextValue
         val editTextValueTag = editTextValue.tag as EditTextValueTag
         val textWatcher = editTextValueTag.textWatcher
         editTextValue.removeTextChangedListener(textWatcher)
-        editTextValue.setText(criterion.value.absoluteValue.toString())
+        editTextValue.setText(alternative.value.absoluteValue.toString())
         editTextValue.addTextChangedListener(textWatcher)
         editTextValueTag.position = position
 
         val switchValueSign = viewHolder.switchValueSign
-        val negative = criterion.value < 0
+        val negative = alternative.value < 0
         switchValueSign.setOnCheckedChangeListener(null)
         switchValueSign.isChecked = negative
         switchValueSign.jumpDrawablesToCurrentState()
@@ -124,19 +124,19 @@ class CriteriaAdapter(
     }
 
     override fun getGroupCount(): Int {
-        return criteriaList.size
+        return alternativesList.size
     }
 
     private val switchValueSignOnChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
         val position = buttonView.tag as Position
-        val criterion = getChild(position.groupPosition, position.childPosition) as Criterion
+        val alternative = getChild(position.groupPosition, position.childPosition) as Alternative
 
-        val abs = criterion.value.absoluteValue
+        val abs = alternative.value.absoluteValue
         if (isChecked) {
-            criterion.value = -abs
+            alternative.value = -abs
             buttonView.text = context.getString(R.string.negative)
         } else {
-            criterion.value = abs
+            alternative.value = abs
             buttonView.text = context.getString(R.string.positive)
         }
     }
@@ -145,9 +145,9 @@ class CriteriaAdapter(
         override fun afterTextChanged(s: Editable?) {
             val tag = view.tag as EditTextValueTag? ?: return
             val position = tag.position
-            val criterion = getChild(position.groupPosition, position.childPosition) as Criterion
+            val alternative = getChild(position.groupPosition, position.childPosition) as Alternative
 
-            criterion.value = s.toString().toIntOrNull() ?: return
+            alternative.value = s.toString().toIntOrNull() ?: return
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -156,13 +156,13 @@ class CriteriaAdapter(
     }
 
     private data class ChildViewHolder(
-        val textViewCriteria: TextView,
+        val textViewAlternative: TextView,
         val editTextValue: EditText,
         val switchValueSign: Switch
     )
 
     private data class GroupViewHolder(
-        val textViewCriteria: TextView
+        val textViewAlternative: TextView
     )
 
     private data class Position(

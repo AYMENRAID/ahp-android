@@ -41,4 +41,10 @@
     <string name="warning_criterion_exists">This criterion already exists</string>
     <string name="warning_no_criterion">You must enter criteria first</string>
     <string name="warning_need_two_criteria">There must be at least two criteria</string>
+    <string name="alternative">Alternative</string>
+    <string name="alternatives">Alternatives</string>
+    <string name="add_alternative">Add Alternative</string>
+    <string name="warning_alternative_exists">This alternative already exists</string>
+    <string name="warning_no_alternative">You must enter alternatives first</string>
+    <string name="warning_need_two_alternatives">There must be at least two alternatives</string>
 </resources>

@@ -5,9 +5,9 @@
               android:orientation="horizontal">
 
     <TextView
-            android:text="@string/criterion"
+            android:text="@string/alternative"
             android:layout_width="match_parent"
-            android:layout_height="50sp" android:id="@+id/text_view_criteria"
+            android:layout_height="50sp" android:id="@+id/textViewAlternative"
             android:textSize="24sp"
             android:gravity="center_vertical"
             android:paddingStart="40sp"

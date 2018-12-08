@@ -9,11 +9,11 @@
               android:paddingLeft="60dp">
 
     <TextView
-            android:text="@string/criterion"
+            android:text="@string/alternative"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:id="@+id/text_view_criteria"
+            android:id="@+id/textViewAlternative"
             android:layout_weight="1"
             android:textSize="24sp"/>
     <Switch

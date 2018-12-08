@@ -19,7 +19,7 @@
         <activity android:name="com.emirhanaydin.analytichierarchyprocess.InfoActivity">
         </activity>
         <activity
-                android:name="com.emirhanaydin.analytichierarchyprocess.CriteriaActivity"
+                android:name="com.emirhanaydin.analytichierarchyprocess.AlternativesActivity"
                 android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity android:name="com.emirhanaydin.analytichierarchyprocess.ResultActivity">

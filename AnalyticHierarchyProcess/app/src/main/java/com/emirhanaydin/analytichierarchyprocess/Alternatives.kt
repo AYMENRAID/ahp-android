@@ -1,6 +1,6 @@
 package com.emirhanaydin.analytichierarchyprocess
 
-data class Criteria(
+data class Alternatives(
     val parent: String,
-    val children: MutableList<Criterion>
+    val children: MutableList<Alternative>
 )

@@ -5,10 +5,10 @@
               android:orientation="horizontal">
 
     <TextView
-            android:text="@string/criterion"
+            android:text="@string/alternative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_result_criterion"
+            android:id="@+id/textViewResultAlternative"
             android:gravity="center_vertical"
             android:textSize="24sp"
             android:paddingTop="5sp"

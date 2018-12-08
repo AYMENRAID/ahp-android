@@ -10,7 +10,7 @@ import java.text.NumberFormat
 
 class ResultActivity : AppCompatActivity() {
     companion object {
-        const val CRITERIA = "Criteria"
+        const val ALTERNATIVES = "Alternatives"
         const val PRIORITIES = "Priorities"
         const val CONSISTENCY_RATIO = "ConsistencyRatio"
     }
@@ -19,7 +19,7 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
 
-        val criteria = intent.getStringArrayExtra(CRITERIA)
+        val alternatives = intent.getStringArrayExtra(ALTERNATIVES)
         val priorities = intent.getFloatArrayExtra(PRIORITIES)
         val consistencyRatio = intent.getFloatExtra(CONSISTENCY_RATIO, 0f)
 
@@ -36,9 +36,9 @@ class ResultActivity : AppCompatActivity() {
             textViewConsistency.setTextColor(Color.RED)
         }
 
-        val criteriaPrioritiesList: MutableList<CriterionPriority> = mutableListOf()
-        for (i in 0 until criteria.size) {
-            criteriaPrioritiesList.add(CriterionPriority(criteria[i], priorities[i]))
+        val criteriaPrioritiesList: MutableList<AlternativePriority> = mutableListOf()
+        for (i in 0 until alternatives.size) {
+            criteriaPrioritiesList.add(AlternativePriority(alternatives[i], priorities[i]))
         }
 
         val resultAdapter = ResultAdapter(criteriaPrioritiesList)

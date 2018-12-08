@@ -10,70 +10,67 @@ import android.text.InputType
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.ExpandableListView
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_criteria.*
+import kotlinx.android.synthetic.main.activity_alternatives.*
 
-class CriteriaActivity : AppCompatActivity() {
-    private lateinit var criteriaList: MutableList<Criteria>
-    private lateinit var criteriaAdapter: CriteriaAdapter
-    private lateinit var listViewCriteria: ExpandableListView
+class AlternativesActivity : AppCompatActivity() {
+    private lateinit var alternativesList: MutableList<Alternatives>
+    private lateinit var alternativesAdapter: AlternativesAdapter
 
     companion object {
-        const val CRITERION_NAME_MAX_LENGTH = 20
-        const val CRITERION_VALUE_MIN = 1
-        const val CRITERION_VALUE_MAX = 9
+        const val ALTERNATIVE_NAME_MAX_LENGTH = 20
+        const val ALTERNATIVE_VALUE_MIN = 1
+        const val ALTERNATIVE_VALUE_MAX = 9
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_criteria)
+        setContentView(R.layout.activity_alternatives)
 
-        criteriaList = mutableListOf()
-        criteriaAdapter = CriteriaAdapter(this, criteriaList)
-        listViewCriteria = findViewById(R.id.expandable_list_view_criteria)
-        listViewCriteria.setAdapter(criteriaAdapter)
+        alternativesList = mutableListOf()
+        alternativesAdapter = AlternativesAdapter(this, alternativesList)
+        expandableListViewAlternatives.setAdapter(alternativesAdapter)
 
-        buttonAddCriterion.setOnClickListener(onClickAddCriterion)
+        buttonAddAlternative.setOnClickListener(onClickAddAlternative)
 
         buttonCalculate.setOnClickListener(onClickButtonCalculate)
     }
 
-    private val onClickAddCriterion = View.OnClickListener {
-        val inputCriteria = EditText(this)
-        inputCriteria.inputType = InputType.TYPE_CLASS_TEXT
-        inputCriteria.filters = arrayOf(InputFilter.LengthFilter(CRITERION_NAME_MAX_LENGTH))
-        inputCriteria.hint = getString(R.string.criterion)
+    private val onClickAddAlternative = View.OnClickListener {
+        val inputAlternative = EditText(this)
+        inputAlternative.inputType = InputType.TYPE_CLASS_TEXT
+        inputAlternative.filters = arrayOf(InputFilter.LengthFilter(ALTERNATIVE_NAME_MAX_LENGTH))
+        inputAlternative.hint = getString(R.string.alternative)
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.add_criterion))
-        builder.setView(inputCriteria)
+        builder.setTitle(getString(R.string.add_alternative))
+        builder.setView(inputAlternative)
 
         builder.setPositiveButton(getString(R.string.add)) { _, _ ->
-            val input = inputCriteria.text.toString().trim()
+            val input = inputAlternative.text.toString().trim()
             if (input.isEmpty()) {
-                Toast.makeText(this, getString(R.string.warning_empty_criterion), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.warning_no_alternative), Toast.LENGTH_SHORT).show()
                 return@setPositiveButton
             }
-            if (criteriaList.any { criteria -> criteria.parent.equals(input, true) }) {
-                Toast.makeText(this, getString(R.string.warning_criterion_exists), Toast.LENGTH_LONG).show()
+            if (alternativesList.any { alternative -> alternative.parent.equals(input, true) }) {
+                Toast.makeText(this, getString(R.string.warning_alternative_exists), Toast.LENGTH_LONG).show()
                 return@setPositiveButton
             }
 
-            val criterion = Criterion(input)
-            for (criteria in criteriaList) {
-                criteria.children.add(Criterion(criterion.criterion))
+            val alternative = Alternative(input)
+            for (alternatives in alternativesList) {
+                alternatives.children.add(Alternative(alternative.name))
             }
 
-            criteriaList.add(Criteria(input, mutableListOf()))
-            criteriaAdapter.notifyDataSetChanged()
+            alternativesList.add(Alternatives(input, mutableListOf()))
+            alternativesAdapter.notifyDataSetChanged()
         }
         builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ -> dialog.cancel() }
 
         val alertDialog: AlertDialog = builder.create()
 
         alertDialog.setOnShowListener {
-            inputCriteria.postDelayed({
+            inputAlternative.postDelayed({
                 val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
             }, 100)
@@ -83,13 +80,13 @@ class CriteriaActivity : AppCompatActivity() {
     }
 
     private val onClickButtonCalculate = View.OnClickListener {
-        val size = criteriaList.size
+        val size = alternativesList.size
         if (size < 1) {
-            Toast.makeText(this, getString(R.string.warning_no_criterion), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.warning_no_alternative), Toast.LENGTH_SHORT).show()
             return@OnClickListener
         }
         if (size < 2) {
-            Toast.makeText(this, getString(R.string.warning_need_two_criteria), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.warning_need_two_alternatives), Toast.LENGTH_LONG).show()
             return@OnClickListener
         }
 
@@ -98,7 +95,7 @@ class CriteriaActivity : AppCompatActivity() {
 
         // Calculate the weights
         for (i in 0 until size) {
-            val children = criteriaList[i].children
+            val children = alternativesList[i].children
 
             for (j in 0 until children.size) {
                 val value = children[j].value.toFloat()
@@ -111,7 +108,7 @@ class CriteriaActivity : AppCompatActivity() {
                 subtotals[index] += weights[i][index]
                 subtotals[i] += weights[index][i]
             }
-            // The diagonal indicates the criterion itself, so its weight is 1
+            // The diagonal indicates the alternative itself, so its weight is 1
             weights[i][i] = 1f
             subtotals[i] += weights[i][i]
         }
@@ -140,7 +137,10 @@ class CriteriaActivity : AppCompatActivity() {
 
         // Start ResultActivity with the calculated results
         val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra(ResultActivity.CRITERIA, criteriaList.map { criteria -> criteria.parent }.toTypedArray())
+        intent.putExtra(
+            ResultActivity.ALTERNATIVES,
+            alternativesList.map { alternatives -> alternatives.parent }.toTypedArray()
+        )
         intent.putExtra(ResultActivity.PRIORITIES, priorities)
         intent.putExtra(ResultActivity.CONSISTENCY_RATIO, cr)
         startActivity(intent)

@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView android:text="@string/criteria"
+    <TextView android:text="@string/alternatives"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:textSize="42sp"
@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:background="@android:color/darker_gray"/>
-    <ExpandableListView android:id="@+id/expandable_list_view_criteria"
+    <ExpandableListView android:id="@+id/expandableListViewAlternatives"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1">
@@ -29,10 +29,10 @@
                 android:background="@android:color/darker_gray"/>
         <Space android:layout_width="match_parent" android:layout_height="10dp"/>
         <Button
-                android:text="@string/add_criterion"
+                android:text="@string/add_alternative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonAddCriterion"
+                android:id="@+id/buttonAddAlternative"
                 android:textSize="24sp"
                 android:textAllCaps="false"
                 android:minHeight="70dp"
