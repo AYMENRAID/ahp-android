@@ -8,6 +8,7 @@ import android.widget.TextView
 
 class CriteriaAdapter(private val dataSet: List<Criterion>) :
     RecyclerView.Adapter<CriteriaAdapter.ViewHolder>() {
+    private lateinit var clickListener: ClickListener
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val inflater = LayoutInflater.from(p0.context)
@@ -27,8 +28,24 @@ class CriteriaAdapter(private val dataSet: List<Criterion>) :
         p0.editTextRating.text = criterion.rating.toString()
     }
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    fun setOnItemClickListener(clickListener: ClickListener) {
+        this.clickListener = clickListener
+    }
+
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         val textViewCriterion: TextView = view.findViewById(R.id.textViewCriterionName)
         val editTextRating: TextView = view.findViewById(R.id.editTextCriterionRating)
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            clickListener.onItemClick(v ?: return, adapterPosition)
+        }
+    }
+
+    interface ClickListener {
+        fun onItemClick(view: View, position: Int)
     }
 }

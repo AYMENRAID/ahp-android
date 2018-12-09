@@ -28,6 +28,7 @@ class CriteriaActivity : AppCompatActivity() {
 
         criterionList = mutableListOf()
         criteriaAdapter = CriteriaAdapter(criterionList)
+        criteriaAdapter.setOnItemClickListener(onClickCriterionItemListener)
         recyclerViewCriteria.apply {
             setHasFixedSize(false)
             layoutManager = LinearLayoutManager(this@CriteriaActivity)
@@ -35,7 +36,7 @@ class CriteriaActivity : AppCompatActivity() {
         }
 
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
-        buttonCriteriaNext.setOnClickListener(onClickNext)
+        buttonCriteriaBack.setOnClickListener { finish() }
     }
 
     private val onClickAddCriterion = View.OnClickListener {
@@ -77,8 +78,11 @@ class CriteriaActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private val onClickNext = View.OnClickListener {
-        val intent = Intent(this, AlternativesActivity::class.java)
-        startActivity(intent)
+    private val onClickCriterionItemListener = object : CriteriaAdapter.ClickListener {
+        override fun onItemClick(view: View, position: Int) {
+            val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
+            intent.putExtra(AlternativesActivity.EXTRA_CRITERION, criterionList[position])
+            startActivity(intent)
+        }
     }
 }

@@ -21,6 +21,7 @@ class AlternativesActivity : AppCompatActivity() {
         const val ALTERNATIVE_NAME_MAX_LENGTH = 20
         const val ALTERNATIVE_VALUE_MIN = 1
         const val ALTERNATIVE_VALUE_MAX = 9
+        const val EXTRA_CRITERION = "Criterion"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
