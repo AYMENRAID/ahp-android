@@ -1,5 +1,6 @@
 package com.emirhanaydin.analytichierarchyprocess
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -21,7 +22,6 @@ class AlternativesActivity : AppCompatActivity() {
         const val ALTERNATIVE_NAME_MAX_LENGTH = 20
         const val ALTERNATIVE_VALUE_MIN = 1
         const val ALTERNATIVE_VALUE_MAX = 9
-        const val EXTRA_CRITERION = "Criterion"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +33,8 @@ class AlternativesActivity : AppCompatActivity() {
         expandableListViewAlternatives.setAdapter(alternativesAdapter)
 
         buttonAddAlternative.setOnClickListener(onClickAddAlternative)
-
-        buttonCalculate.setOnClickListener(onClickButtonCalculate)
+        buttonAlternativesSave.setOnClickListener(onClickButtonSave)
+        buttonAlternativesBack.setOnClickListener(onClickButtonBack)
     }
 
     private val onClickAddAlternative = View.OnClickListener {
@@ -80,70 +80,16 @@ class AlternativesActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private val onClickButtonCalculate = View.OnClickListener {
-        val size = alternativesList.size
-        if (size < 1) {
-            Toast.makeText(this, getString(R.string.warning_no_alternative), Toast.LENGTH_SHORT).show()
-            return@OnClickListener
-        }
-        if (size < 2) {
-            Toast.makeText(this, getString(R.string.warning_need_two_alternatives), Toast.LENGTH_LONG).show()
-            return@OnClickListener
-        }
-
-        val weights = Array(size) { FloatArray(size) }
-        val subtotals = FloatArray(size)
-
-        // Calculate the weights
-        for (i in 0 until size) {
-            val children = alternativesList[i].children
-
-            for (j in 0 until children.size) {
-                val value = children[j].value.toFloat()
-                val index = j + i + 1 // Plus i to make the calculations triangular, plus 1 to skip diagonal
-
-                weights[i][index] = if (value > 0) value else 1 / -value // Take absolute reciprocal if negative
-                weights[index][i] = 1 / weights[i][index] // Reciprocal
-
-                // Add the values to subtotals by their column indexes
-                subtotals[index] += weights[i][index]
-                subtotals[i] += weights[index][i]
-            }
-            // The diagonal indicates the alternative itself, so its weight is 1
-            weights[i][i] = 1f
-            subtotals[i] += weights[i][i]
-        }
-
-        // Normalize the weights
-        for (i in 0 until size) {
-            for (j in 0 until size) {
-                weights[i][j] /= subtotals[j]
-            }
-        }
-
-        // Calculate priorities with the normalized weights
-        val priorities = FloatArray(size)
-        for (i in 0 until size) {
-            var sum = 0f
-            for (j in 0 until size) {
-                sum += weights[i][j]
-            }
-            priorities[i] = sum / size // Average of the row
-        }
-
-        // Calculate the consistency ratio
-        val eMax = multiplyVectors(priorities, subtotals)
-        val ci = (eMax - size) / (size - 1)
-        val cr = ci / getRandomIndex(size)
-
-        // Start ResultActivity with the calculated results
-        val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra(
-            ResultActivity.ALTERNATIVES,
-            alternativesList.map { alternatives -> alternatives.parent }.toTypedArray()
+    private val onClickButtonSave = View.OnClickListener {
+        setResult(
+            Activity.RESULT_OK,
+            Intent().putParcelableArrayListExtra(CriteriaActivity.EXTRA_ALTERNATIVES, ArrayList(alternativesList))
         )
-        intent.putExtra(ResultActivity.PRIORITIES, priorities)
-        intent.putExtra(ResultActivity.CONSISTENCY_RATIO, cr)
-        startActivity(intent)
+        finish()
+    }
+
+    private val onClickButtonBack = View.OnClickListener {
+        setResult(Activity.RESULT_CANCELED)
+        finish()
     }
 }

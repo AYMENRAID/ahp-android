@@ -39,19 +39,25 @@
                 android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"/>
         <Button
-                android:text="@string/calculate"
+                android:text="@string/save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/buttonCalculate"
+                android:id="@+id/buttonAlternativesSave"
+                android:textSize="24sp"
+                android:textAllCaps="false"
+                android:minHeight="70dp"
+                android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"/>
+        <Button
+                android:text="@string/back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/buttonAlternativesBack"
                 android:textSize="24sp"
                 android:textAllCaps="false"
                 android:minHeight="70dp"
                 android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
                 android:layout_marginEnd="10dp"/>
         <Space android:layout_width="match_parent" android:layout_height="10dp"/>
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@android:color/darker_gray"/>
     </LinearLayout>
 </LinearLayout>

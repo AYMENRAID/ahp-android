@@ -17,9 +17,12 @@ import kotlinx.android.synthetic.main.activity_criteria.*
 class CriteriaActivity : AppCompatActivity() {
     private lateinit var criterionList: MutableList<Criterion>
     private lateinit var criteriaAdapter: CriteriaAdapter
+    private var selectedCriterionPosition = -1
 
     companion object {
         const val CRITERION_NAME_MAX_LENGTH = 20
+        const val EXTRA_ALTERNATIVES = "ExtraAlternatives"
+        const val REQUEST_ALTERNATIVES = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +40,20 @@ class CriteriaActivity : AppCompatActivity() {
 
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
         buttonCriteriaBack.setOnClickListener { finish() }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            REQUEST_ALTERNATIVES -> {
+                val alternativeList = if (data == null) return
+                else data.getParcelableArrayListExtra<Alternatives>(EXTRA_ALTERNATIVES)
+
+                val criterion = criterionList.getOrNull(selectedCriterionPosition) ?: return
+                criterion.alternativesList = alternativeList
+
+                selectedCriterionPosition = -1
+            }
+        }
     }
 
     private val onClickAddCriterion = View.OnClickListener {
@@ -80,9 +97,10 @@ class CriteriaActivity : AppCompatActivity() {
 
     private val onClickCriterionItemListener = object : CriteriaAdapter.ClickListener {
         override fun onItemClick(view: View, position: Int) {
+            selectedCriterionPosition = position
+
             val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
-            intent.putExtra(AlternativesActivity.EXTRA_CRITERION, criterionList[position])
-            startActivity(intent)
+            startActivityForResult(intent, REQUEST_ALTERNATIVES)
         }
     }
 }
