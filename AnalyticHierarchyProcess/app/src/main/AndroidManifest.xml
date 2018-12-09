@@ -24,7 +24,8 @@
         </activity>
         <activity android:name=".ResultActivity">
         </activity>
-        <activity android:name=".CriteriaActivity">
+        <activity android:name=".CriteriaActivity"
+                  android:windowSoftInputMode="adjustNothing">
         </activity>
     </application>
 
