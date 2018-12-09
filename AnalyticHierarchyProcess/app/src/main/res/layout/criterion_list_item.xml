@@ -40,4 +40,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="0dp" android:layout_marginStart="0dp"
             tools:ignore="RelativeOverlap"/>
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLighterGray"
+            android:layout_marginTop="60dp"/>
 </RelativeLayout>
