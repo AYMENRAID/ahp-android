@@ -28,7 +28,12 @@ class AlternativesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alternatives)
 
-        alternativesList = mutableListOf()
+        val extras = intent.extras
+        alternativesList = extras
+            ?.getParcelableArrayList<Alternatives>(CriteriaActivity.EXTRA_ALTERNATIVES)
+            ?.toMutableList()
+                ?: mutableListOf()
+
         alternativesAdapter = AlternativesAdapter(this, alternativesList)
         expandableListViewAlternatives.setAdapter(alternativesAdapter)
 

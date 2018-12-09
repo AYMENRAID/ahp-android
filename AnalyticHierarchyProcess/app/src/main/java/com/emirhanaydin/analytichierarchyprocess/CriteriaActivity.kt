@@ -1,5 +1,6 @@
 package com.emirhanaydin.analytichierarchyprocess
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.InputFilter
 import android.text.InputType
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -17,9 +19,12 @@ import kotlinx.android.synthetic.main.activity_criteria.*
 class CriteriaActivity : AppCompatActivity() {
     private lateinit var criterionList: MutableList<Criterion>
     private lateinit var criteriaAdapter: CriteriaAdapter
+    private lateinit var alternativesList: ArrayList<Alternatives>
     private var selectedCriterionPosition = -1
 
     companion object {
+        @JvmStatic
+        val TAG: String = CriteriaActivity::class.java.name
         const val CRITERION_NAME_MAX_LENGTH = 20
         const val EXTRA_ALTERNATIVES = "ExtraAlternatives"
         const val REQUEST_ALTERNATIVES = 0
@@ -43,15 +48,46 @@ class CriteriaActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            REQUEST_ALTERNATIVES -> {
-                val alternativeList = if (data == null) return
+        if (requestCode == REQUEST_ALTERNATIVES) {
+            if (resultCode == Activity.RESULT_OK) {
+                val alternativesList = if (data == null) run { Log.e(TAG, "Data intent is null"); return }
                 else data.getParcelableArrayListExtra<Alternatives>(EXTRA_ALTERNATIVES)
 
-                val criterion = criterionList.getOrNull(selectedCriterionPosition) ?: return
-                criterion.alternativesList = alternativeList
+                val criterion = criterionList.getOrNull(selectedCriterionPosition) ?: run {
+                    Log.e(
+                        TAG,
+                        "Criterion cannot be found at the selected position"
+                    ); return
+                }
+                criterion.alternativesList = alternativesList
 
-                selectedCriterionPosition = -1
+                this.alternativesList = alternativesList.map { alternatives ->
+                    Alternatives(
+                        alternatives.parent,
+                        alternatives.children.map { alternative -> Alternative(alternative.name) }.toMutableList()
+                    )
+                } as ArrayList<Alternatives>
+
+                for (i in 0 until criterionList.size) {
+                    if (i == selectedCriterionPosition) continue
+
+                    val c = criterionList[i]
+                    val list = c.alternativesList
+                    c.alternativesList = ArrayList(this.alternativesList)
+                    if (list == null) continue
+                    val newList = c.alternativesList ?: run {
+                        Log.e(
+                            TAG,
+                            "The alternatives list is null after assignment"
+                        ); return
+                    }
+
+                    for (j in 0 until list.size) {
+                        for (k in 0 until list[j].children.size) {
+                            newList[j].children[k].value = list[j].children[k].value
+                        }
+                    }
+                }
             }
         }
     }
@@ -78,8 +114,10 @@ class CriteriaActivity : AppCompatActivity() {
             }
 
             val criterion = Criterion(input)
-            criterionList.add(criterion)
+            if (::alternativesList.isInitialized)
+                criterion.alternativesList = alternativesList
             criteriaAdapter.notifyDataSetChanged()
+            criterionList.add(criterion)
         }
 
         builder.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.cancel() }
@@ -100,6 +138,11 @@ class CriteriaActivity : AppCompatActivity() {
             selectedCriterionPosition = position
 
             val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
+            val criterion = criterionList[position]
+            val alternativesList = criterion.alternativesList
+            if (alternativesList != null) {
+                intent.putExtra(EXTRA_ALTERNATIVES, alternativesList)
+            }
             startActivityForResult(intent, REQUEST_ALTERNATIVES)
         }
     }
