@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="4dp"
             android:background="@android:color/darker_gray"/>
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerViewCriteria"
+    <ExpandableListView
+            android:id="@+id/expandableListViewCriteria"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>

@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.text.InputFilter
 import android.text.InputType
 import android.util.Log
@@ -17,7 +16,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_criteria.*
 
 class CriteriaActivity : AppCompatActivity() {
-    private lateinit var criterionList: MutableList<Criterion>
+    private lateinit var criteriaList: MutableList<Criteria>
     private lateinit var criteriaAdapter: CriteriaAdapter
     private lateinit var alternativesList: ArrayList<Alternatives>
     private var selectedCriterionPosition = -1
@@ -26,6 +25,8 @@ class CriteriaActivity : AppCompatActivity() {
         @JvmStatic
         val TAG: String = CriteriaActivity::class.java.name
         const val CRITERION_NAME_MAX_LENGTH = 20
+        const val CRITERION_RATING_MIN = 1
+        const val CRITERION_RATING_MAX = 9
         const val EXTRA_ALTERNATIVES = "ExtraAlternatives"
         const val REQUEST_ALTERNATIVES = 0
     }
@@ -34,14 +35,9 @@ class CriteriaActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_criteria)
 
-        criterionList = mutableListOf()
-        criteriaAdapter = CriteriaAdapter(criterionList)
-        criteriaAdapter.setOnItemClickListener(onClickCriterionItemListener)
-        recyclerViewCriteria.apply {
-            setHasFixedSize(false)
-            layoutManager = LinearLayoutManager(this@CriteriaActivity)
-            adapter = criteriaAdapter
-        }
+        criteriaList = mutableListOf()
+        criteriaAdapter = CriteriaAdapter(this, criteriaList)
+        expandableListViewCriteria.setAdapter(criteriaAdapter)
 
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
         buttonCriteriaBack.setOnClickListener { finish() }
@@ -53,13 +49,13 @@ class CriteriaActivity : AppCompatActivity() {
                 val alternativesList = if (data == null) run { Log.e(TAG, "Data intent is null"); return }
                 else data.getParcelableArrayListExtra<Alternatives>(EXTRA_ALTERNATIVES)
 
-                val criterion = criterionList.getOrNull(selectedCriterionPosition) ?: run {
+                val criteria = criteriaList.getOrNull(selectedCriterionPosition) ?: run {
                     Log.e(
                         TAG,
-                        "Criterion cannot be found at the selected position"
+                        "Criteria cannot be found at the selected position"
                     ); return
                 }
-                criterion.alternativesList = alternativesList
+                criteria.alternativesList = alternativesList
 
                 this.alternativesList = alternativesList.map { alternatives ->
                     Alternatives(
@@ -68,10 +64,10 @@ class CriteriaActivity : AppCompatActivity() {
                     )
                 } as ArrayList<Alternatives>
 
-                for (i in 0 until criterionList.size) {
+                for (i in 0 until criteriaList.size) {
                     if (i == selectedCriterionPosition) continue
 
-                    val c = criterionList[i]
+                    val c = criteriaList[i]
                     val list = c.alternativesList
                     c.alternativesList = ArrayList(this.alternativesList)
                     if (list == null) continue
@@ -108,16 +104,18 @@ class CriteriaActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.warning_no_criterion), Toast.LENGTH_SHORT).show()
                 return@setPositiveButton
             }
-            if (criterionList.any { criterion -> criterion.name.equals(input, true) }) {
+            if (criteriaList.any { criterion -> criterion.parentName.equals(input, true) }) {
                 Toast.makeText(this, getString(R.string.warning_criterion_exists), Toast.LENGTH_LONG).show()
                 return@setPositiveButton
             }
 
             val criterion = Criterion(input)
-            if (::alternativesList.isInitialized)
-                criterion.alternativesList = alternativesList
+            for (criteria in criteriaList) {
+                criteria.children.add(Criterion(criterion.name))
+            }
+
+            criteriaList.add(Criteria(input))
             criteriaAdapter.notifyDataSetChanged()
-            criterionList.add(criterion)
         }
 
         builder.setNegativeButton(R.string.cancel) { dialog, _ -> dialog.cancel() }
@@ -133,17 +131,17 @@ class CriteriaActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private val onClickCriterionItemListener = object : CriteriaAdapter.ClickListener {
-        override fun onItemClick(view: View, position: Int) {
-            selectedCriterionPosition = position
-
-            val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
-            val criterion = criterionList[position]
-            val alternativesList = criterion.alternativesList
-            if (alternativesList != null) {
-                intent.putExtra(EXTRA_ALTERNATIVES, alternativesList)
-            }
-            startActivityForResult(intent, REQUEST_ALTERNATIVES)
-        }
-    }
+//    private val onClickCriterionItemListener = object : CriteriaAdapter.ClickListener {
+//        override fun onItemClick(view: View, position: Int) {
+//            selectedCriterionPosition = position
+//
+//            val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
+//            val criterion = criteriaList[position]
+//            val alternativesList = criterion.alternativesList
+//            if (alternativesList != null) {
+//                intent.putExtra(EXTRA_ALTERNATIVES, alternativesList)
+//            }
+//            startActivityForResult(intent, REQUEST_ALTERNATIVES)
+//        }
+//    }
 }
