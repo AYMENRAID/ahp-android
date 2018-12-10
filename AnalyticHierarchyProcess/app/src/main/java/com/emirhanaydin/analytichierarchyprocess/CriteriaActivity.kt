@@ -42,6 +42,7 @@ class CriteriaActivity : AppCompatActivity() {
         criteriaAdapter.setOptionsViewOnClickListener(optionsViewOnClickListener)
 
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
+        buttonCriteriaCalculate.setOnClickListener(onClickButtonCalculate)
         buttonCriteriaBack.setOnClickListener { finish() }
     }
 
@@ -145,5 +146,59 @@ class CriteriaActivity : AppCompatActivity() {
             }
             startActivityForResult(intent, REQUEST_ALTERNATIVES)
         }
+    }
+
+    private val onClickButtonCalculate = View.OnClickListener {
+        val criteriaSize = criteriaList.size
+        if (criteriaSize < 1) {
+            Toast.makeText(this, getString(R.string.warning_no_criterion), Toast.LENGTH_SHORT).show()
+            return@OnClickListener
+        }
+        if (criteriaSize < 2) {
+            Toast.makeText(this, getString(R.string.warning_need_two_criteria), Toast.LENGTH_LONG).show()
+            return@OnClickListener
+        }
+
+        if (!::alternativesList.isInitialized || alternativesList.size < 1) {
+            Toast.makeText(this, getString(R.string.warning_no_alternative), Toast.LENGTH_SHORT).show()
+            return@OnClickListener
+        }
+        val alternativesSize = alternativesList.size
+        if (alternativesSize < 2) {
+            Toast.makeText(this, getString(R.string.warning_need_two_alternatives), Toast.LENGTH_LONG).show()
+            return@OnClickListener
+        }
+
+        val ratings: Array<IntArray> = run {
+            val ratings: Array<IntArray?> = arrayOfNulls(criteriaSize)
+            for (i in 0 until criteriaSize) {
+                val children = criteriaList[i].children
+                val childrenSize = children.size
+                ratings[i] = IntArray(childrenSize)
+
+                for (j in 0 until childrenSize) {
+                    ratings[i]!![j] = children[j].rating
+                }
+            }
+            ratings.map { ints -> ints as IntArray }.toTypedArray()
+        }
+
+        val priorities: FloatArray
+        val consistencyRatio: Float
+
+        performAhp(ratings).apply {
+            priorities = first
+            consistencyRatio = second
+        }
+
+        // Start ResultActivity with the calculated results
+        val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra(
+            ResultActivity.ALTERNATIVES,
+            criteriaList.map { criteria -> criteria.parentName }.toTypedArray()
+        )
+        intent.putExtra(ResultActivity.PRIORITIES, priorities)
+        intent.putExtra(ResultActivity.CONSISTENCY_RATIO, consistencyRatio)
+        startActivity(intent)
     }
 }
