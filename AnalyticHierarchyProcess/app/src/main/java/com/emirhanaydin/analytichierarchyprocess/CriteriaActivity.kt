@@ -39,6 +39,8 @@ class CriteriaActivity : AppCompatActivity() {
         criteriaAdapter = CriteriaAdapter(this, criteriaList)
         expandableListViewCriteria.setAdapter(criteriaAdapter)
 
+        criteriaAdapter.setOptionsViewOnClickListener(optionsViewOnClickListener)
+
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
         buttonCriteriaBack.setOnClickListener { finish() }
     }
@@ -131,17 +133,17 @@ class CriteriaActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-//    private val onClickCriterionItemListener = object : CriteriaAdapter.ClickListener {
-//        override fun onItemClick(view: View, position: Int) {
-//            selectedCriterionPosition = position
-//
-//            val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
-//            val criterion = criteriaList[position]
-//            val alternativesList = criterion.alternativesList
-//            if (alternativesList != null) {
-//                intent.putExtra(EXTRA_ALTERNATIVES, alternativesList)
-//            }
-//            startActivityForResult(intent, REQUEST_ALTERNATIVES)
-//        }
-//    }
+    private val optionsViewOnClickListener = object : CriteriaAdapter.OptionsViewOnClickListener {
+        override fun onClick(groupPosition: Int, childPosition: Int) {
+            selectedCriterionPosition = groupPosition
+
+            val intent = Intent(this@CriteriaActivity, AlternativesActivity::class.java)
+            val criterion = criteriaList[groupPosition]
+            val alternativesList = criterion.alternativesList
+            if (alternativesList != null) {
+                intent.putExtra(EXTRA_ALTERNATIVES, alternativesList)
+            }
+            startActivityForResult(intent, REQUEST_ALTERNATIVES)
+        }
+    }
 }

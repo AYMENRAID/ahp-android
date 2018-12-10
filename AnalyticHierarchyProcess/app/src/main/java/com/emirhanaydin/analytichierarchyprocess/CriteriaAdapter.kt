@@ -14,6 +14,7 @@ class CriteriaAdapter(
     private val dataSet: List<Criteria>
 ) :
     BaseExpandableListAdapter() {
+    private var optionsViewOnClickListener: OptionsViewOnClickListener? = null
 
     companion object {
         const val CHILD_TYPE_OPTIONS = 0
@@ -84,6 +85,10 @@ class CriteriaAdapter(
                     )
 
                     viewHolder.buttonCriterionDelete.isEnabled = false
+                    viewHolder.buttonCriterionAlternatives.apply {
+                        tag = Position(groupPosition, childPosition)
+                        setOnClickListener(optionsViewOnClickListener)
+                    }
                 }
                 CHILD_TYPE_CRITERION -> {
                     view = inflater.inflate(R.layout.criterion_list_item, parent, false)
@@ -109,13 +114,27 @@ class CriteriaAdapter(
 
             view
         } else convertView
-        if (childType == CHILD_TYPE_OPTIONS) return view
 
-        val viewHolder = view.tag as CriterionViewHolder
-        val criterion = getChild(groupPosition, childPosition) as Criterion
+        val viewHolder = view.tag as ChildViewHolder
 
-        viewHolder.textViewCriterionItemName.text = criterion.name
-        viewHolder.editTextCriterionRating.setText(criterion.rating.toString())
+        when (childType) {
+            CHILD_TYPE_OPTIONS -> {
+                viewHolder as OptionsViewHolder
+
+                val position = viewHolder.buttonCriterionAlternatives.tag as Position
+                position.apply {
+                    this.groupPosition = groupPosition
+                    this.childPosition = childPosition
+                }
+            }
+            CHILD_TYPE_CRITERION -> {
+                val criterion = getChild(groupPosition, childPosition) as Criterion
+
+                viewHolder as CriterionViewHolder
+                viewHolder.textViewCriterionItemName.text = criterion.name
+                viewHolder.editTextCriterionRating.setText(criterion.rating.toString())
+            }
+        }
 
         return view
     }
@@ -136,6 +155,20 @@ class CriteriaAdapter(
         return 2
     }
 
+    fun setOptionsViewOnClickListener(listener: OptionsViewOnClickListener) {
+        optionsViewOnClickListener = listener
+    }
+
+    interface OptionsViewOnClickListener : View.OnClickListener {
+        override fun onClick(v: View) {
+            val position = v.tag as Position
+
+            onClick(position.groupPosition, position.childPosition)
+        }
+
+        fun onClick(groupPosition: Int, childPosition: Int)
+    }
+
     private abstract class ChildViewHolder(
         val childType: Int
     )
@@ -153,4 +186,9 @@ class CriteriaAdapter(
         val buttonCriterionAlternatives: Button,
         val buttonCriterionDelete: Button
     ) : ChildViewHolder(CHILD_TYPE_CRITERION)
+
+    private data class Position(
+        var groupPosition: Int,
+        var childPosition: Int
+    )
 }
