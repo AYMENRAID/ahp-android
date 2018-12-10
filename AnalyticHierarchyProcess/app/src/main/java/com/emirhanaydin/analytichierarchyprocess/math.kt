@@ -36,10 +36,10 @@ private fun getWeights(ratings: Array<IntArray>): Pair<Array<FloatArray>, FloatA
         val child = ratings[i]
 
         for (j in 0 until child.size) {
-            val ratio = child[j].toFloat()
+            val rating = child[j].toFloat()
             val index = j + i + 1 // Plus i to make the calculations triangular, plus 1 to skip diagonal
 
-            weights[i][index] = if (ratio > 0) ratio else 1 / -ratio // Take absolute reciprocal if negative
+            weights[i][index] = if (rating > 0) rating else 1 / -rating // Take absolute reciprocal if negative
             weights[index][i] = 1 / weights[i][index] // Reciprocal
 
             // Add the values to subtotals by their column indexes
