@@ -31,8 +31,8 @@
     <string name="cancel">İptal</string>
     <string name="calculate">Hesapla</string>
     <string name="criteria">Kriterler</string>
-    <string name="positive">Pozitif</string>
-    <string name="negative">Negatif</string>
+    <string name="normal">Normal</string>
+    <string name="reciprocal">Karşıt</string>
     <string name="consistency_ratio">Tutarlılık Oranı</string>
     <string name="zero_percentage">%0,00</string>
     <string name="results">Sonuçlar</string>

@@ -36,9 +36,9 @@ class CriteriaAdapter(
     override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View {
         val view = convertView ?: let {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = inflater.inflate(R.layout.criterion_list_group, parent, false)
+            val view = inflater.inflate(R.layout.ahp_list_group, parent, false)
 
-            view.tag = GroupViewHolder(view.findViewById(R.id.textViewCriterionGroupName))
+            view.tag = GroupViewHolder(view.findViewById(R.id.textViewGroupName))
 
             view
         }
@@ -91,11 +91,11 @@ class CriteriaAdapter(
                     }
                 }
                 CHILD_TYPE_CRITERION -> {
-                    view = inflater.inflate(R.layout.criterion_list_item, parent, false)
+                    view = inflater.inflate(R.layout.ahp_list_item, parent, false)
 
                     viewHolder = CriterionViewHolder(
-                        view.findViewById(R.id.textViewCriterionItemName),
-                        view.findViewById(R.id.editTextCriterionRating)
+                        view.findViewById(R.id.textViewItemName),
+                        view.findViewById(R.id.editTextRating)
                     )
 
                     viewHolder.editTextCriterionRating.filters = arrayOf(

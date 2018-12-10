@@ -189,7 +189,7 @@ class CriteriaActivity : AppCompatActivity() {
             criteriaConsistencyRatio = second
         }
 
-        var alternativeRatings = arrayOf<Array<IntArray>>()
+        var alternativeRatings = arrayOf<Array<FloatArray>>()
         var alternativePriorities = arrayOf<FloatArray>()
         var alternativeConsistencyRatios = arrayOf<Float>()
 
@@ -225,20 +225,21 @@ class CriteriaActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun getRatingsArray(ahpGroupList: List<AhpGroup>): Array<IntArray> {
+    private fun getRatingsArray(ahpGroupList: List<AhpGroup>): Array<FloatArray> {
         val size = ahpGroupList.size
-        val ratings: Array<IntArray?> = arrayOfNulls(size)
+        val ratings: Array<FloatArray?> = arrayOfNulls(size)
 
         for (i in 0 until size) {
             val children = ahpGroupList[i].children
             val childrenSize = children.size
-            ratings[i] = IntArray(childrenSize)
+            ratings[i] = FloatArray(childrenSize)
 
             for (j in 0 until childrenSize) {
-                ratings[i]!![j] = children[j].rating
+                val rating = children[j].rating.toFloat()
+                ratings[i]!![j] = if (children[j].isReciprocal) 1f / rating else rating
             }
         }
 
-        return ratings.filterIsInstance<IntArray>().toTypedArray()
+        return ratings.filterIsInstance<FloatArray>().toTypedArray()
     }
 }

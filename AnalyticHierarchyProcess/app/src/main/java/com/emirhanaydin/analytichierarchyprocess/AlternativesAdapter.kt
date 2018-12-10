@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import kotlin.math.absoluteValue
 
 class AlternativesAdapter(
     private val context: Context,
@@ -32,15 +31,15 @@ class AlternativesAdapter(
 
         if (cView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            cView = inflater.inflate(R.layout.alternatives_expandable_list_group, parent, false)
+            cView = inflater.inflate(R.layout.ahp_list_group, parent, false)
 
-            groupViewHolder = GroupViewHolder(cView.findViewById(R.id.textViewAlternative))
+            groupViewHolder = GroupViewHolder(cView.findViewById(R.id.textViewGroupName))
 
             cView.tag = groupViewHolder
         } else
             groupViewHolder = cView.tag as GroupViewHolder
 
-        groupViewHolder.textViewAlternative.text = (getGroup(groupPosition) as Alternatives).parentName
+        groupViewHolder.textViewGroupName.text = (getGroup(groupPosition) as Alternatives).parentName
 
         return cView!!
     }
@@ -69,24 +68,24 @@ class AlternativesAdapter(
 
         if (cView == null) {
             val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            cView = inflater.inflate(R.layout.alternative_expandable_list_item, parent, false)
+            cView = inflater.inflate(R.layout.ahp_list_item, parent, false)
 
-            val textViewAlternative: TextView = cView.findViewById(R.id.textViewAlternative)
-            val editTextValue: EditText = cView.findViewById(R.id.edit_text_value)
-            val switchValueSign: Switch = cView.findViewById(R.id.switch_value_sign)
+            val textViewAlternative: TextView = cView.findViewById(R.id.textViewItemName)
+            val editTextRating: EditText = cView.findViewById(R.id.editTextRating)
+            val switchReciprocal: Switch = cView.findViewById(R.id.switchReciprocal)
             viewHolder = ChildViewHolder(
                 textViewAlternative,
-                editTextValue,
-                switchValueSign
+                editTextRating,
+                switchReciprocal
             )
-            editTextValue.filters = arrayOf(
+            editTextRating.filters = arrayOf(
                 InputFilterMinMax(
                     AlternativesActivity.ALTERNATIVE_VALUE_MIN,
                     AlternativesActivity.ALTERNATIVE_VALUE_MAX
                 )
             )
-            editTextValue.tag = EditTextValueTag(
-                EditTextValueTextWatcher(editTextValue),
+            editTextRating.tag = EditTextRatingTag(
+                EditTextRatingTextWatcher(editTextRating),
                 Position(groupPosition, childPosition)
             )
 
@@ -99,22 +98,22 @@ class AlternativesAdapter(
 
         viewHolder.textViewAlternative.text = alternative.name
 
-        val editTextValue: EditText = viewHolder.editTextValue
-        val editTextValueTag = editTextValue.tag as EditTextValueTag
-        val textWatcher = editTextValueTag.textWatcher
-        editTextValue.removeTextChangedListener(textWatcher)
-        editTextValue.setText(alternative.rating.absoluteValue.toString())
-        editTextValue.addTextChangedListener(textWatcher)
-        editTextValueTag.position = position
+        val editTextRating: EditText = viewHolder.editTextRating
+        val editTextRatingTag = editTextRating.tag as EditTextRatingTag
+        val textWatcher = editTextRatingTag.textWatcher
+        editTextRating.removeTextChangedListener(textWatcher)
+        editTextRating.setText(alternative.rating.toString())
+        editTextRating.addTextChangedListener(textWatcher)
+        editTextRatingTag.position = position
 
-        val switchValueSign = viewHolder.switchValueSign
-        val negative = alternative.rating < 0
-        switchValueSign.setOnCheckedChangeListener(null)
-        switchValueSign.isChecked = negative
-        switchValueSign.jumpDrawablesToCurrentState()
-        switchValueSign.text = context.getString(if (negative) R.string.negative else R.string.positive)
-        switchValueSign.tag = position
-        switchValueSign.setOnCheckedChangeListener(switchValueSignOnChangeListener)
+        val switchReciprocal = viewHolder.switchReciprocal
+        val isReciprocal = alternative.isReciprocal
+        switchReciprocal.setOnCheckedChangeListener(null)
+        switchReciprocal.isChecked = isReciprocal
+        switchReciprocal.jumpDrawablesToCurrentState()
+        switchReciprocal.text = context.getString(if (isReciprocal) R.string.reciprocal else R.string.normal)
+        switchReciprocal.tag = position
+        switchReciprocal.setOnCheckedChangeListener(switchReciprocalOnChangeListener)
 
         return cView!!
     }
@@ -127,23 +126,21 @@ class AlternativesAdapter(
         return alternativesList.size
     }
 
-    private val switchValueSignOnChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+    private val switchReciprocalOnChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
         val position = buttonView.tag as Position
         val alternative = getChild(position.groupPosition, position.childPosition) as Alternative
+        alternative.isReciprocal = isChecked
 
-        val abs = alternative.rating.absoluteValue
         if (isChecked) {
-            alternative.rating = -abs
-            buttonView.text = context.getString(R.string.negative)
+            buttonView.text = context.getString(R.string.reciprocal)
         } else {
-            alternative.rating = abs
-            buttonView.text = context.getString(R.string.positive)
+            buttonView.text = context.getString(R.string.normal)
         }
     }
 
-    private inner class EditTextValueTextWatcher(private val view: View) : TextWatcher {
+    private inner class EditTextRatingTextWatcher(private val view: View) : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            val tag = view.tag as EditTextValueTag? ?: return
+            val tag = view.tag as EditTextRatingTag? ?: return
             val position = tag.position
             val alternative = getChild(position.groupPosition, position.childPosition) as Alternative
 
@@ -157,12 +154,12 @@ class AlternativesAdapter(
 
     private data class ChildViewHolder(
         val textViewAlternative: TextView,
-        val editTextValue: EditText,
-        val switchValueSign: Switch
+        val editTextRating: EditText,
+        val switchReciprocal: Switch
     )
 
     private data class GroupViewHolder(
-        val textViewAlternative: TextView
+        val textViewGroupName: TextView
     )
 
     private data class Position(
@@ -170,8 +167,8 @@ class AlternativesAdapter(
         val childPosition: Int
     )
 
-    private data class EditTextValueTag(
-        val textWatcher: EditTextValueTextWatcher,
+    private data class EditTextRatingTag(
+        val textWatcher: EditTextRatingTextWatcher,
         var position: Position
     )
 }

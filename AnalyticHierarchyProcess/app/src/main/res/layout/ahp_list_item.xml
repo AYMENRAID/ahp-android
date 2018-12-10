@@ -11,17 +11,25 @@
             android:text="@string/criterion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textViewCriterionItemName"
+            android:id="@+id/textViewItemName"
             android:gravity="center_vertical"
             android:textSize="24sp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:layout_alignParentTop="true" android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"/>
+    <Switch
+            android:text="@string/normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switchReciprocal" android:layout_toStartOf="@+id/editTextRating"
+            android:layout_marginRight="20dp" android:layout_marginEnd="20dp"
+            android:layout_toLeftOf="@+id/editTextRating" android:layout_centerVertical="true"
+            tools:ignore="RelativeOverlap"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editTextCriterionRating"
+            android:id="@+id/editTextRating"
             android:inputType="number"
             android:textSize="24sp"
             android:gravity="center_vertical|end"

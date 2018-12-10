@@ -26,7 +26,7 @@ fun multiplyVectors(v1: FloatArray, v2: FloatArray): Float {
     return sum
 }
 
-private fun getWeights(ratings: Array<IntArray>): Pair<Array<FloatArray>, FloatArray> {
+private fun getWeights(ratings: Array<FloatArray>): Pair<Array<FloatArray>, FloatArray> {
     val size = ratings.size
     val weights = Array(size) { FloatArray(size) }
     val subtotals = FloatArray(size)
@@ -36,10 +36,8 @@ private fun getWeights(ratings: Array<IntArray>): Pair<Array<FloatArray>, FloatA
         val child = ratings[i]
 
         for (j in 0 until child.size) {
-            val rating = child[j].toFloat()
             val index = j + i + 1 // Plus i to make the calculations triangular, plus 1 to skip diagonal
 
-            weights[i][index] = if (rating > 0) rating else 1 / -rating // Take absolute reciprocal if negative
             weights[index][i] = 1 / weights[i][index] // Reciprocal
 
             // Add the values to subtotals by their column indexes
@@ -94,7 +92,7 @@ private fun getConsistencyRatio(priorities: FloatArray, subtotals: FloatArray): 
     return consistencyIndex / getRandomIndex(size)
 }
 
-fun performAhp(ratings: Array<IntArray>): Pair<FloatArray, Float> {
+fun performAhp(ratings: Array<FloatArray>): Pair<FloatArray, Float> {
     val weights: Array<FloatArray>
     val subtotals: FloatArray
     getWeights(ratings).apply {
