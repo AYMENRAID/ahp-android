@@ -58,7 +58,7 @@ class AlternativesActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.warning_no_alternative), Toast.LENGTH_SHORT).show()
                 return@setPositiveButton
             }
-            if (alternativesList.any { alternative -> alternative.parent.equals(input, true) }) {
+            if (alternativesList.any { alternative -> alternative.parentName.equals(input, true) }) {
                 Toast.makeText(this, getString(R.string.warning_alternative_exists), Toast.LENGTH_LONG).show()
                 return@setPositiveButton
             }

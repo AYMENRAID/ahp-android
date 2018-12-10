@@ -40,7 +40,7 @@ class AlternativesAdapter(
         } else
             groupViewHolder = cView.tag as GroupViewHolder
 
-        groupViewHolder.textViewAlternative.text = (getGroup(groupPosition) as Alternatives).parent
+        groupViewHolder.textViewAlternative.text = (getGroup(groupPosition) as Alternatives).parentName
 
         return cView!!
     }
@@ -103,12 +103,12 @@ class AlternativesAdapter(
         val editTextValueTag = editTextValue.tag as EditTextValueTag
         val textWatcher = editTextValueTag.textWatcher
         editTextValue.removeTextChangedListener(textWatcher)
-        editTextValue.setText(alternative.value.absoluteValue.toString())
+        editTextValue.setText(alternative.rating.absoluteValue.toString())
         editTextValue.addTextChangedListener(textWatcher)
         editTextValueTag.position = position
 
         val switchValueSign = viewHolder.switchValueSign
-        val negative = alternative.value < 0
+        val negative = alternative.rating < 0
         switchValueSign.setOnCheckedChangeListener(null)
         switchValueSign.isChecked = negative
         switchValueSign.jumpDrawablesToCurrentState()
@@ -131,12 +131,12 @@ class AlternativesAdapter(
         val position = buttonView.tag as Position
         val alternative = getChild(position.groupPosition, position.childPosition) as Alternative
 
-        val abs = alternative.value.absoluteValue
+        val abs = alternative.rating.absoluteValue
         if (isChecked) {
-            alternative.value = -abs
+            alternative.rating = -abs
             buttonView.text = context.getString(R.string.negative)
         } else {
-            alternative.value = abs
+            alternative.rating = abs
             buttonView.text = context.getString(R.string.positive)
         }
     }
@@ -147,7 +147,7 @@ class AlternativesAdapter(
             val position = tag.position
             val alternative = getChild(position.groupPosition, position.childPosition) as Alternative
 
-            alternative.value = s.toString().toIntOrNull() ?: return
+            alternative.rating = s.toString().toIntOrNull() ?: return
         }
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

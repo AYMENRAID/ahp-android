@@ -62,7 +62,7 @@ class CriteriaActivity : AppCompatActivity() {
 
                 this.alternativesList = alternativesList.map { alternatives ->
                     Alternatives(
-                        alternatives.parent,
+                        alternatives.parentName,
                         alternatives.children.map { alternative -> Alternative(alternative.name) }.toMutableList()
                     )
                 } as ArrayList<Alternatives>
@@ -83,7 +83,7 @@ class CriteriaActivity : AppCompatActivity() {
 
                     for (j in 0 until list.size) {
                         for (k in 0 until list[j].children.size) {
-                            newList[j].children[k].value = list[j].children[k].value
+                            newList[j].children[k].rating = list[j].children[k].rating
                         }
                     }
                 }

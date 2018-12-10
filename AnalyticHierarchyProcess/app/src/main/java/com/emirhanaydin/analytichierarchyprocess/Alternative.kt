@@ -3,10 +3,10 @@ package com.emirhanaydin.analytichierarchyprocess
 import android.os.Parcel
 import android.os.Parcelable
 
-class Alternative(
-    val name: String,
-    var value: Int = 1
-) : Parcelable {
+class Alternative(name: String, rating: Int = 1) : AhpItem(
+    name,
+    rating
+), Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -15,7 +15,7 @@ class Alternative(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
-        parcel.writeInt(value)
+        parcel.writeInt(rating)
     }
 
     override fun describeContents(): Int {

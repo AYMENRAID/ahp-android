@@ -1,7 +1,8 @@
 package com.emirhanaydin.analytichierarchyprocess
 
-data class Criteria(
-    val parentName: String,
-    val children: MutableList<Criterion> = mutableListOf(),
+@Suppress("UNCHECKED_CAST")
+class Criteria(
+    parentName: String,
+    children: MutableList<Criterion> = mutableListOf(),
     var alternativesList: ArrayList<Alternatives>? = null
-)
+) : AhpGroup(parentName, children as MutableList<AhpItem>)

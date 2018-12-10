@@ -3,20 +3,21 @@ package com.emirhanaydin.analytichierarchyprocess
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Alternatives(
-    val parent: String,
-    val children: MutableList<Alternative>
-) : Parcelable {
+@Suppress("UNCHECKED_CAST")
+class Alternatives(parentName: String, children: MutableList<Alternative>) : AhpGroup(
+    parentName,
+    children as MutableList<AhpItem>
+), Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readParcelableArray(Alternative::class.java.classLoader)!!
-            .map { parcelable -> parcelable as Alternative }
-            .toMutableList()
+            .filterIsInstance<Alternative>().toMutableList()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(parent)
-        parcel.writeParcelableArray(children.toTypedArray(), flags)
+        parcel.writeString(parentName)
+        parcel.writeParcelableArray(children.filterIsInstance<Alternative>().toTypedArray(), flags)
     }
 
     override fun describeContents(): Int {
