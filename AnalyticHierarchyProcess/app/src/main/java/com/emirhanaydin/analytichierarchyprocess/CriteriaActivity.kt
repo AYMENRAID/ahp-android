@@ -180,25 +180,45 @@ class CriteriaActivity : AppCompatActivity() {
             return@OnClickListener
         }
 
-        val ratings = getRatingsArray(criteriaList)
-        val priorities: FloatArray
-        val consistencyRatio: Float
+        val criteriaRatings = getRatingsArray(criteriaList)
+        val criteriaPriorities: FloatArray
+        val criteriaConsistencyRatio: Float
 
-        performAhp(ratings).apply {
-            priorities = first
-            consistencyRatio = second
+        performAhp(criteriaRatings).apply {
+            criteriaPriorities = first
+            criteriaConsistencyRatio = second
         }
 
         var alternativeRatings = arrayOf<Array<IntArray>>()
+        var alternativePriorities = arrayOf<FloatArray>()
+        var alternativeConsistencyRatios = arrayOf<Float>()
+
         for (i in 0 until criteriaSize) {
             alternativeRatings += getRatingsArray(criteriaList[i].alternativesList as List<AhpGroup>)
+            performAhp(alternativeRatings[i]).apply {
+                alternativePriorities += first
+                alternativeConsistencyRatios += second
+            }
         }
+
+        val priorities = FloatArray(alternativesSize) { 0f }
+        var consistencyRatio = criteriaConsistencyRatio
+
+        for (i in 0 until criteriaSize) {
+            consistencyRatio += alternativeConsistencyRatios[i]
+            for (j in 0 until alternativesSize) {
+                // Add the weight of the criterion on each alternative to its total weight
+                priorities[j] += criteriaPriorities[i] * alternativePriorities[i][j]
+            }
+        }
+        // Take the mean, one is added due to the criteria
+        consistencyRatio /= (alternativesSize + 1)
 
         // Start ResultActivity with the calculated results
         val intent = Intent(this, ResultActivity::class.java)
         intent.putExtra(
             ResultActivity.ALTERNATIVES,
-            criteriaList.map { criteria -> criteria.parentName }.toTypedArray()
+            alternativesList.map { alternatives -> alternatives.parentName }.toTypedArray()
         )
         intent.putExtra(ResultActivity.PRIORITIES, priorities)
         intent.putExtra(ResultActivity.CONSISTENCY_RATIO, consistencyRatio)
