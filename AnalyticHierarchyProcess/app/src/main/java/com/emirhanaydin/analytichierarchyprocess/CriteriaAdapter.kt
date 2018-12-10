@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 
@@ -13,6 +14,11 @@ class CriteriaAdapter(
     private val dataSet: List<Criteria>
 ) :
     BaseExpandableListAdapter() {
+
+    companion object {
+        const val CHILD_TYPE_OPTIONS = 0
+        const val CHILD_TYPE_CRITERION = 1
+    }
 
     override fun getGroup(groupPosition: Int): Any {
         return dataSet[groupPosition]
@@ -43,11 +49,11 @@ class CriteriaAdapter(
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
-        return dataSet[groupPosition].children.size
+        return dataSet[groupPosition].children.size + 1
     }
 
     override fun getChild(groupPosition: Int, childPosition: Int): Any {
-        return dataSet[groupPosition].children[childPosition]
+        return dataSet[groupPosition].children[childPosition - 1]
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -61,28 +67,51 @@ class CriteriaAdapter(
         convertView: View?,
         parent: ViewGroup?
     ): View {
-        val view = convertView ?: let {
+        val childType = getChildType(groupPosition, childPosition)
+        val view = if (convertView == null || (convertView.tag as ChildViewHolder).childType != childType) {
             val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val view = inflater.inflate(R.layout.criterion_list_item, parent, false)
+            val view: View
 
-            val viewHolder = ChildViewHolder(
-                view.findViewById(R.id.textViewCriterionItemName),
-                view.findViewById(R.id.editTextCriterionRating)
-            )
+            val viewHolder: ChildViewHolder
 
-            viewHolder.editTextCriterionRating.filters = arrayOf(
-                InputFilterMinMax(
-                    CriteriaActivity.CRITERION_RATING_MIN,
-                    CriteriaActivity.CRITERION_RATING_MAX
-                )
-            )
+            when (childType) {
+                CHILD_TYPE_OPTIONS -> {
+                    view = inflater.inflate(R.layout.criterion_list_options, parent, false)
+
+                    viewHolder = OptionsViewHolder(
+                        view.findViewById(R.id.buttonCriterionAlternatives),
+                        view.findViewById(R.id.buttonCriterionDelete)
+                    )
+
+                    viewHolder.buttonCriterionDelete.isEnabled = false
+                }
+                CHILD_TYPE_CRITERION -> {
+                    view = inflater.inflate(R.layout.criterion_list_item, parent, false)
+
+                    viewHolder = CriterionViewHolder(
+                        view.findViewById(R.id.textViewCriterionItemName),
+                        view.findViewById(R.id.editTextCriterionRating)
+                    )
+
+                    viewHolder.editTextCriterionRating.filters = arrayOf(
+                        InputFilterMinMax(
+                            CriteriaActivity.CRITERION_RATING_MIN,
+                            CriteriaActivity.CRITERION_RATING_MAX
+                        )
+                    )
+                }
+                else -> {
+                    throw IllegalStateException("Illegal child type")
+                }
+            }
 
             view.tag = viewHolder
 
             view
-        }
+        } else convertView
+        if (childType == CHILD_TYPE_OPTIONS) return view
 
-        val viewHolder = view.tag as ChildViewHolder
+        val viewHolder = view.tag as CriterionViewHolder
         val criterion = getChild(groupPosition, childPosition) as Criterion
 
         viewHolder.textViewCriterionItemName.text = criterion.name
@@ -99,12 +128,29 @@ class CriteriaAdapter(
         return dataSet.size
     }
 
+    override fun getChildType(groupPosition: Int, childPosition: Int): Int {
+        return if (childPosition <= 0) CHILD_TYPE_OPTIONS else CHILD_TYPE_CRITERION
+    }
+
+    override fun getChildTypeCount(): Int {
+        return 2
+    }
+
+    private abstract class ChildViewHolder(
+        val childType: Int
+    )
+
     private data class GroupViewHolder(
         val textViewCriterionGroupName: TextView
     )
 
-    private data class ChildViewHolder(
+    private data class CriterionViewHolder(
         val textViewCriterionItemName: TextView,
         val editTextCriterionRating: EditText
-    )
+    ) : ChildViewHolder(CHILD_TYPE_OPTIONS)
+
+    private data class OptionsViewHolder(
+        val buttonCriterionAlternatives: Button,
+        val buttonCriterionDelete: Button
+    ) : ChildViewHolder(CHILD_TYPE_CRITERION)
 }

@@ -49,4 +49,5 @@
     <string name="warning_need_two_alternatives">There must be at least two alternatives</string>
     <string name="back">Back</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
 </resources>

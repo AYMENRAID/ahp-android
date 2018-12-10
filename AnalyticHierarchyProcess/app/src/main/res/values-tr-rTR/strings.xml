@@ -50,4 +50,5 @@
     <string name="warning_need_two_alternatives">En az iki alternatif olmalıdır</string>
     <string name="back">Geri</string>
     <string name="save">Kaydet</string>
+    <string name="delete">Sil</string>
 </resources>
