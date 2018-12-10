@@ -169,20 +169,7 @@ class CriteriaActivity : AppCompatActivity() {
             return@OnClickListener
         }
 
-        val ratings: Array<IntArray> = run {
-            val ratings: Array<IntArray?> = arrayOfNulls(criteriaSize)
-            for (i in 0 until criteriaSize) {
-                val children = criteriaList[i].children
-                val childrenSize = children.size
-                ratings[i] = IntArray(childrenSize)
-
-                for (j in 0 until childrenSize) {
-                    ratings[i]!![j] = children[j].rating
-                }
-            }
-            ratings.map { ints -> ints as IntArray }.toTypedArray()
-        }
-
+        val ratings = getRatingsArray(criteriaList)
         val priorities: FloatArray
         val consistencyRatio: Float
 
@@ -200,5 +187,22 @@ class CriteriaActivity : AppCompatActivity() {
         intent.putExtra(ResultActivity.PRIORITIES, priorities)
         intent.putExtra(ResultActivity.CONSISTENCY_RATIO, consistencyRatio)
         startActivity(intent)
+    }
+
+    private fun getRatingsArray(ahpGroupList: List<AhpGroup>): Array<IntArray> {
+        val size = ahpGroupList.size
+        val ratings: Array<IntArray?> = arrayOfNulls(size)
+
+        for (i in 0 until size) {
+            val children = ahpGroupList[i].children
+            val childrenSize = children.size
+            ratings[i] = IntArray(childrenSize)
+
+            for (j in 0 until childrenSize) {
+                ratings[i]!![j] = children[j].rating
+            }
+        }
+
+        return ratings.filterIsInstance<IntArray>().toTypedArray()
     }
 }
