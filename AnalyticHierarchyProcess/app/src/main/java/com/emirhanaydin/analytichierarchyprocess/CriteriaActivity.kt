@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_criteria.*
 class CriteriaActivity : AppCompatActivity() {
     private lateinit var criteriaList: MutableList<Criteria>
     private lateinit var criteriaAdapter: CriteriaAdapter
-    private lateinit var alternativesList: ArrayList<Alternatives>
+    private lateinit var alternativesList: List<Alternatives>
     private var selectedCriterionPosition = -1
 
     companion object {
@@ -59,35 +59,43 @@ class CriteriaActivity : AppCompatActivity() {
                     ); return
                 }
                 criteria.alternativesList = alternativesList
+                if (this::alternativesList.isInitialized && alternativesList == this.alternativesList) return
 
-                this.alternativesList = alternativesList.map { alternatives ->
-                    Alternatives(
-                        alternatives.parentName,
-                        alternatives.children.map { alternative -> Alternative(alternative.name) }.toMutableList()
-                    )
-                } as ArrayList<Alternatives>
-
-                for (i in 0 until criteriaList.size) {
-                    if (i == selectedCriterionPosition) continue
-
-                    val c = criteriaList[i]
-                    val list = c.alternativesList
-                    c.alternativesList = ArrayList(this.alternativesList)
-                    if (list == null) continue
-                    val newList = c.alternativesList ?: run {
-                        Log.e(
-                            TAG,
-                            "The alternatives list is null after assignment"
-                        ); return
-                    }
-
-                    for (j in 0 until list.size) {
-                        for (k in 0 until list[j].children.size) {
-                            newList[j].children[k].rating = list[j].children[k].rating
-                        }
-                    }
-                }
+                setAlternativesList(alternativesList)
             }
+        }
+    }
+
+    private fun getNewAlternativesList(alternativesList: List<Alternatives>): List<Alternatives> {
+        return alternativesList.map { alternatives ->
+            Alternatives(
+                alternatives.parentName,
+                alternatives.children.map { alternative -> Alternative(alternative.name) }.toMutableList()
+            )
+        }
+    }
+
+    private fun setCriteriaAlternativesList(criteria: Criteria, alternativesList: List<Alternatives>) {
+        val list = criteria.alternativesList
+        val newList = getNewAlternativesList(alternativesList) as ArrayList
+        criteria.alternativesList = newList
+        if (list == null) return
+
+        for (j in 0 until list.size) {
+            for (k in 0 until list[j].children.size) {
+                newList[j].children[k].rating = list[j].children[k].rating
+            }
+        }
+    }
+
+    private fun setAlternativesList(alternativesList: List<Alternatives>) {
+        this.alternativesList = getNewAlternativesList(alternativesList) as ArrayList<Alternatives>
+
+        for (i in 0 until criteriaList.size) {
+            if (i == selectedCriterionPosition) continue
+
+            val criteria = criteriaList[i]
+            setCriteriaAlternativesList(criteria, alternativesList)
         }
     }
 
@@ -117,7 +125,10 @@ class CriteriaActivity : AppCompatActivity() {
                 criteria.children.add(Criterion(criterion.name))
             }
 
-            criteriaList.add(Criteria(input))
+            val criteria = Criteria(input)
+            if (this::alternativesList.isInitialized)
+                setCriteriaAlternativesList(criteria, this.alternativesList)
+            criteriaList.add(criteria)
             criteriaAdapter.notifyDataSetChanged()
         }
 
@@ -159,7 +170,7 @@ class CriteriaActivity : AppCompatActivity() {
             return@OnClickListener
         }
 
-        if (!::alternativesList.isInitialized || alternativesList.size < 1) {
+        if (!::alternativesList.isInitialized || alternativesList.isEmpty()) {
             Toast.makeText(this, getString(R.string.warning_no_alternative), Toast.LENGTH_SHORT).show()
             return@OnClickListener
         }
@@ -176,6 +187,11 @@ class CriteriaActivity : AppCompatActivity() {
         performAhp(ratings).apply {
             priorities = first
             consistencyRatio = second
+        }
+
+        var alternativeRatings = arrayOf<Array<IntArray>>()
+        for (i in 0 until criteriaSize) {
+            alternativeRatings += getRatingsArray(criteriaList[i].alternativesList as List<AhpGroup>)
         }
 
         // Start ResultActivity with the calculated results
