@@ -3,7 +3,7 @@ package com.emirhanaydin.analytichierarchyprocess
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -11,13 +11,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val buttonHelp = findViewById<Button>(R.id.buttonHelp)
-        buttonHelp.setOnClickListener {
+        buttonInformation.setOnClickListener {
             val intent = Intent(this, InfoActivity::class.java)
             startActivity(intent)
         }
 
-        val buttonNewAnalyze = findViewById<Button>(R.id.buttonNewAnalyze)
         buttonNewAnalyze.setOnClickListener {
             val intent = Intent(this, CriteriaActivity::class.java)
             startActivity(intent)

@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_result.*
 import java.text.NumberFormat
 
@@ -40,14 +39,11 @@ class ResultActivity : AppCompatActivity() {
         for (i in 0 until alternatives.size) {
             criteriaPrioritiesList.add(AlternativePriority(alternatives[i], priorities[i]))
         }
-
         val resultAdapter = ResultAdapter(criteriaPrioritiesList)
-        val recyclerViewResult: RecyclerView = findViewById<RecyclerView>(R.id.recycler_view_result).apply {
+        recyclerViewResult.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@ResultActivity)
             adapter = resultAdapter
         }
-
-        recyclerViewResult.adapter = resultAdapter
     }
 }
