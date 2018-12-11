@@ -43,7 +43,7 @@ class CriteriaActivity : AppCompatActivity() {
 
         buttonAddCriterion.setOnClickListener(onClickAddCriterion)
         buttonCriteriaCalculate.setOnClickListener(onClickButtonCalculate)
-        buttonCriteriaBack.setOnClickListener { finish() }
+        buttonCriteriaExit.setOnClickListener { finish() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

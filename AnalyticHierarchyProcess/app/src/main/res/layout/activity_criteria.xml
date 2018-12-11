@@ -1,63 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView android:text="@string/criteria"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:textSize="42sp"
-              android:textStyle="bold"
-              android:gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/criteria"
+        android:textSize="42sp"
+        android:textStyle="bold" />
+
     <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@android:color/darker_gray" />
+
+    <ExpandableListView
+        android:id="@+id/expandableListViewCriteria"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="@android:color/darker_gray"/>
-    <ExpandableListView
-            android:id="@+id/expandableListViewCriteria"
+            android:background="@android:color/darker_gray" />
+
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-    <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/buttonAddCriterion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@android:color/darker_gray"/>
-        <Space android:layout_width="match_parent" android:layout_height="10dp"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:minHeight="70dp"
+            android:text="@string/add_criterion"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
         <Button
-                android:text="@string/add_criterion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonAddCriterion"
-                android:textSize="24sp"
-                android:textAllCaps="false"
-                android:minHeight="70dp"
-                android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"/>
+            android:id="@+id/buttonCriteriaCalculate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:minHeight="70dp"
+            android:text="@string/calculate"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
         <Button
-                android:text="@string/calculate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonCriteriaCalculate"
-                android:textSize="24sp"
-                android:textAllCaps="false"
-                android:minHeight="70dp"
-                android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"/>
-        <Button
-                android:text="@string/back"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonCriteriaBack"
-                android:textSize="24sp"
-                android:textAllCaps="false"
-                android:minHeight="70dp"
-                android:layout_marginStart="10dp" android:layout_marginLeft="10dp"
-                android:layout_marginEnd="10dp"/>
-        <Space android:layout_width="match_parent" android:layout_height="10dp"/>
+            android:id="@+id/buttonCriteriaExit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="10dp"
+            android:minHeight="70dp"
+            android:text="@string/exit"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
     </LinearLayout>
 </LinearLayout>
