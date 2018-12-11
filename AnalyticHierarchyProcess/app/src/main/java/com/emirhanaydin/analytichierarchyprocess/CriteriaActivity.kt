@@ -182,37 +182,45 @@ class CriteriaActivity : AppCompatActivity() {
 
         val criteriaRatings = getRatingsArray(criteriaList)
         val criteriaPriorities: FloatArray
-        val criteriaConsistencyRatio: Float
+        val criteriaConsistencyIndex: Float
+        val criteriaRandomIndex: Float
 
         performAhp(criteriaRatings).apply {
-            criteriaPriorities = first
-            criteriaConsistencyRatio = second
+            criteriaPriorities = this.priorities
+            criteriaConsistencyIndex = this.consistencyIndex
+            criteriaRandomIndex = this.randomIndex
         }
 
         var alternativeRatings = arrayOf<Array<FloatArray>>()
         var alternativePriorities = arrayOf<FloatArray>()
+        var alternativeConsistencyIndexes = arrayOf<Float>()
+        var alternativeRandomIndex = arrayOf<Float>()
         var alternativeConsistencyRatios = arrayOf<Float>()
 
         for (i in 0 until criteriaSize) {
             alternativeRatings += getRatingsArray(criteriaList[i].alternativesList as List<AhpGroup>)
             performAhp(alternativeRatings[i]).apply {
-                alternativePriorities += first
-                alternativeConsistencyRatios += second
+                alternativePriorities += this.priorities
+                alternativeConsistencyIndexes += this.consistencyIndex
+                alternativeRandomIndex += this.consistencyRatio
+                alternativeConsistencyRatios += this.consistencyRatio
             }
         }
 
         val priorities = FloatArray(alternativesSize) { 0f }
-        var consistencyRatio = criteriaConsistencyRatio
+        var consistencyIndex = criteriaConsistencyIndex
+        var randomIndex = criteriaRandomIndex
 
         for (i in 0 until criteriaSize) {
-            consistencyRatio += alternativeConsistencyRatios[i]
+            // Add the weight of the criterion on all consistency and random indexes to their total weight
+            consistencyIndex += criteriaPriorities[i] * alternativeConsistencyIndexes[i]
+            randomIndex += criteriaPriorities[i] * alternativeRandomIndex[i]
             for (j in 0 until alternativesSize) {
                 // Add the weight of the criterion on each alternative to its total weight
                 priorities[j] += criteriaPriorities[i] * alternativePriorities[i][j]
             }
         }
-        // Take the mean, one is added due to the criteria
-        consistencyRatio /= (alternativesSize + 1)
+        val consistencyRatio = consistencyIndex / randomIndex
 
         // Start ResultActivity with the calculated results
         val intent = Intent(this, ResultActivity::class.java)

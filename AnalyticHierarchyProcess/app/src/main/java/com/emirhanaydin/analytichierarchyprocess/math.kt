@@ -83,17 +83,17 @@ private fun getPriorities(normalizedWeights: Array<FloatArray>): FloatArray {
     return priorities
 }
 
-private fun getConsistencyRatio(priorities: FloatArray, subtotals: FloatArray): Float {
+private fun getConsistencyRatio(priorities: FloatArray, subtotals: FloatArray): Pair<Float, Float> {
     val size = priorities.size
 
     // Calculate the consistency ratio
     val eMax = multiplyVectors(priorities, subtotals)
     val consistencyIndex = (eMax - size) / (size - 1)
 
-    return consistencyIndex / getRandomIndex(size)
+    return Pair(consistencyIndex, getRandomIndex(size))
 }
 
-fun performAhp(ratings: Array<FloatArray>): Pair<FloatArray, Float> {
+fun performAhp(ratings: Array<FloatArray>): AhpResult {
     val weights: Array<FloatArray>
     val subtotals: FloatArray
     getWeights(ratings).apply {
@@ -103,6 +103,18 @@ fun performAhp(ratings: Array<FloatArray>): Pair<FloatArray, Float> {
     val normalizedWeights = getNormalizedWeights(weights, subtotals)
 
     val priorities = getPriorities(normalizedWeights)
-    val consistencyRatio = getConsistencyRatio(priorities, subtotals)
-    return Pair(priorities, consistencyRatio)
+    val randomIndex: Float
+    val consistencyIndex: Float
+    getConsistencyRatio(priorities, subtotals).apply {
+        consistencyIndex = first
+        randomIndex = second
+    }
+    return AhpResult(priorities, consistencyIndex, randomIndex, consistencyIndex / randomIndex)
 }
+
+class AhpResult(
+    val priorities: FloatArray,
+    val consistencyIndex: Float,
+    val randomIndex: Float,
+    val consistencyRatio: Float
+)
