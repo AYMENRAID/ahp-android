@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Analytic Hierarchy Process</string>
-    <string name="help">Help</string>
-    <string name="info_table_00">Importance</string>
-    <string name="info_table_01">Rating</string>
+    <string name="information">Information</string>
+    <string name="importance">Importance</string>
+    <string name="rating">Rating</string>
     <string name="info_table_10">Extreme</string>
     <string name="info_table_11">9</string>
     <string name="info_table_20">Very strong to extremely</string>

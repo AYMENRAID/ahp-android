@@ -1,213 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InfoActivity">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
+
+        <TextView
+            android:id="@+id/textViewInfoImportance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="@string/importance"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorLighterGray" />
+
+        <TextView
+            android:id="@+id/textViewInfoRating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.7"
+            android:gravity="end"
+            android:text="@string/rating"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:ignore="RelativeOverlap" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".InfoActivity">
+        android:orientation="vertical">
 
-    <TableLayout
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewInfo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@android:color/darker_gray" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/buttonInfoBack"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:shrinkColumns="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="20dp">
+            android:minHeight="70dp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textSize="24sp" />
 
-        <TableRow
-                android:paddingBottom="20dp">
-            <TextView
-                    android:text="@string/info_table_00"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textStyle="bold"
-                    android:textSize="26sp"
-                    android:gravity="start"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_01"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_horizontal"
-                    android:textStyle="bold"
-                    android:textSize="26sp"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_10"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_11"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_20"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_30"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_31"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_40"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_41"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_50"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_51"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_60"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_61"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_70"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_71"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_80"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="14sp"
-                    android:textStyle="italic"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_81"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-        <TableRow
-                android:paddingTop="10dp">
-            <TextView
-                    android:text="@string/info_table_90"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:textSize="20sp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginEnd="10dp"/>
-            <TextView
-                    android:text="@string/info_table_91"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-            />
-        </TableRow>
-    </TableLayout>
-</android.support.constraint.ConstraintLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+    </LinearLayout>
+</LinearLayout>

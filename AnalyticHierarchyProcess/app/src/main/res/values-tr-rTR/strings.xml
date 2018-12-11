@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Analitik Hiyerarşi Süreci</string>
-    <string name="help">Yardım</string>
-    <string name="info_table_00">Önem</string>
-    <string name="info_table_01">Derece</string>
+    <string name="information">Bilgilendirme</string>
+    <string name="importance">Önem</string>
+    <string name="rating">Derece</string>
     <string name="info_table_10">Aşırı</string>
     <string name="info_table_11">9</string>
     <string name="info_table_20">Çok güçlü ile aşırı arası</string>
