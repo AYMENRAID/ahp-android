@@ -39,7 +39,7 @@ class AlternativesActivity : AppCompatActivity() {
 
         buttonAddAlternative.setOnClickListener(onClickAddAlternative)
         buttonAlternativesSave.setOnClickListener(onClickButtonSave)
-        buttonAlternativesBack.setOnClickListener(onClickButtonBack)
+        buttonAlternativesCancel.setOnClickListener(onClickButtonCancel)
     }
 
     private val onClickAddAlternative = View.OnClickListener {
@@ -93,7 +93,7 @@ class AlternativesActivity : AppCompatActivity() {
         finish()
     }
 
-    private val onClickButtonBack = View.OnClickListener {
+    private val onClickButtonCancel = View.OnClickListener {
         setResult(Activity.RESULT_CANCELED)
         finish()
     }
