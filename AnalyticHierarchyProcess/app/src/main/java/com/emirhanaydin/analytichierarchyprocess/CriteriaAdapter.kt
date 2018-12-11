@@ -1,13 +1,12 @@
 package com.emirhanaydin.analytichierarchyprocess
 
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseExpandableListAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 
 class CriteriaAdapter(
     private val context: Context,
@@ -95,15 +94,22 @@ class CriteriaAdapter(
 
                     viewHolder = CriterionViewHolder(
                         view.findViewById(R.id.textViewItemName),
-                        view.findViewById(R.id.editTextRating)
+                        view.findViewById(R.id.editTextRating),
+                        view.findViewById(R.id.switchReciprocal)
                     )
 
-                    viewHolder.editTextCriterionRating.filters = arrayOf(
-                        InputFilterMinMax(
-                            CriteriaActivity.CRITERION_RATING_MIN,
-                            CriteriaActivity.CRITERION_RATING_MAX
+                    viewHolder.editTextCriterionRating.apply {
+                        filters = arrayOf(
+                            InputFilterMinMax(
+                                CriteriaActivity.CRITERION_RATING_MIN,
+                                CriteriaActivity.CRITERION_RATING_MAX
+                            )
                         )
-                    )
+                        tag = EditTextRatingTag(
+                            EditTextRatingTextWatcher(this),
+                            Position(groupPosition, childPosition)
+                        )
+                    }
                 }
                 else -> {
                     throw IllegalStateException("Illegal child type")
@@ -129,10 +135,30 @@ class CriteriaAdapter(
             }
             CHILD_TYPE_CRITERION -> {
                 val criterion = getChild(groupPosition, childPosition) as Criterion
+                val position = Position(groupPosition, childPosition)
 
                 viewHolder as CriterionViewHolder
+
                 viewHolder.textViewCriterionItemName.text = criterion.name
-                viewHolder.editTextCriterionRating.setText(criterion.rating.toString())
+
+                viewHolder.editTextCriterionRating.apply {
+                    val tag = tag as EditTextRatingTag
+                    val textWatcher = tag.textWatcher
+                    tag.position = position
+                    removeTextChangedListener(textWatcher)
+                    setText(criterion.rating.toString())
+                    addTextChangedListener(textWatcher)
+                }
+
+                viewHolder.switchReciprocal.apply {
+                    val isReciprocal = criterion.isReciprocal
+                    setOnCheckedChangeListener(null)
+                    isChecked = isReciprocal
+                    jumpDrawablesToCurrentState()
+                    text = context.getString(if (isReciprocal) R.string.reciprocal else R.string.normal)
+                    tag = position
+                    setOnCheckedChangeListener(switchReciprocalOnChangeListener)
+                }
             }
         }
 
@@ -159,9 +185,18 @@ class CriteriaAdapter(
         optionsViewOnClickListener = listener
     }
 
+    private val switchReciprocalOnChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        val position = buttonView.tag as? Position ?: return@OnCheckedChangeListener
+        val criterion = getChild(position.groupPosition, position.childPosition) as Criterion
+
+        criterion.isReciprocal = isChecked
+
+        buttonView.text = context.getString(if (isChecked) R.string.reciprocal else R.string.normal)
+    }
+
     interface OptionsViewOnClickListener : View.OnClickListener {
         override fun onClick(v: View) {
-            val position = v.tag as Position
+            val position = v.tag as? Position ?: return
 
             onClick(position.groupPosition, position.childPosition)
         }
@@ -179,7 +214,8 @@ class CriteriaAdapter(
 
     private data class CriterionViewHolder(
         val textViewCriterionItemName: TextView,
-        val editTextCriterionRating: EditText
+        val editTextCriterionRating: EditText,
+        val switchReciprocal: Switch
     ) : ChildViewHolder(CHILD_TYPE_OPTIONS)
 
     private data class OptionsViewHolder(
@@ -191,4 +227,23 @@ class CriteriaAdapter(
         var groupPosition: Int,
         var childPosition: Int
     )
+
+    private data class EditTextRatingTag(
+        val textWatcher: EditTextRatingTextWatcher,
+        var position: Position
+    )
+
+    private inner class EditTextRatingTextWatcher(private val view: View) : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            val tag = view.tag as? EditTextRatingTag ?: return
+            val position = tag.position
+            val criterion = getChild(position.groupPosition, position.childPosition) as Criterion
+
+            criterion.rating = s.toString().toIntOrNull() ?: return
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
 }
