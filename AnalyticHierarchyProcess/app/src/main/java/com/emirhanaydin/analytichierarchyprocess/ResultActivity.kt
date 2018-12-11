@@ -1,5 +1,6 @@
 package com.emirhanaydin.analytichierarchyprocess
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -45,5 +46,14 @@ class ResultActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ResultActivity)
             adapter = resultAdapter
         }
+
+        buttonResultExit.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+
+            startActivity(intent)
+        }
+        buttonResultBack.setOnClickListener { finish() }
     }
 }
