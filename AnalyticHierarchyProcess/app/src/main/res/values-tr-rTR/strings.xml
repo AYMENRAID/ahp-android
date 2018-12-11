@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Analytic Hierarchy Process</string>
+    <string name="app_name">Analitik Hiyerarşi Süreci</string>
     <string name="help">Yardım</string>
     <string name="info_table_00">Önem</string>
     <string name="info_table_01">Derece</string>
