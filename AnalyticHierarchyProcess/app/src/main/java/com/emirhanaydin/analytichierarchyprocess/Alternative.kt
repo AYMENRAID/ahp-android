@@ -3,19 +3,22 @@ package com.emirhanaydin.analytichierarchyprocess
 import android.os.Parcel
 import android.os.Parcelable
 
-class Alternative(name: String, rating: Int = 1) : AhpItem(
+class Alternative(name: String, rating: Int = 1, isReciprocal: Boolean = false) : AhpItem(
     name,
-    rating
+    rating,
+    isReciprocal
 ), Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
-        parcel.readInt()
+        parcel.readInt(),
+        parcel.readInt() != 0
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeInt(rating)
+        parcel.writeInt(if (isReciprocal) 1 else 0)
     }
 
     override fun describeContents(): Int {
